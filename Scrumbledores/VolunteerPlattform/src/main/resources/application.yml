@@ -6,3 +6,9 @@ spring:
     mongodb:
       uri: mongodb://localhost/volunteerplatform
       auto-index-creation: true
+
+platformuser:
+  roles:
+    - ROLE_VOLUNTEER
+    - ROLE_ORGANIZATION
+    - ROLE_INDIVIDUAL
