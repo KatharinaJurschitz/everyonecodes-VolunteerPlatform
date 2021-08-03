@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.apache.commons.validator.routines.EmailValidator;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -22,7 +21,7 @@ public class UserService {
 
     public Optional<PlatformUser> createUser(PlatformUser input) {
 
-        if (input.getRole().size() == 1) {
+        if (input.getRole().size() == 1 && isUsernameValid(input.getUsername()) && isEmailValid(input.getEmail())) {
 
             if (roles.containsAll(input.getRole())) {
                 String passwordEncoded = encoder.encode(input.getPassword());
