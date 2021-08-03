@@ -38,4 +38,9 @@ public class UserService {
         Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         return pattern.matcher(email).matches();
     }
+
+    public boolean isUsernameValid(String username) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]*$");
+        return pattern.matcher(username).matches();
+    }
 }
