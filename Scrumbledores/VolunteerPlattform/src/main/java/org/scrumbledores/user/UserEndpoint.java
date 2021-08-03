@@ -2,13 +2,12 @@ package org.scrumbledores.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/users")
@@ -25,4 +24,14 @@ public class UserEndpoint {
         }
         return  oUser.get();
     }
+
+    @GetMapping("/login")
+    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
+    PlatformUser login(Principal principal) {
+        return service.findUser(principal);
+    }
+
+
+
+
 }

@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 import java.util.Set;
 
@@ -31,5 +32,10 @@ public class UserService {
         }
 
         return Optional.empty();
+    }
+
+    public PlatformUser findUser(Principal principal) {
+        Optional<PlatformUser> user = repository.findOneByUsername(principal.getName());
+        return user.get();
     }
 }
