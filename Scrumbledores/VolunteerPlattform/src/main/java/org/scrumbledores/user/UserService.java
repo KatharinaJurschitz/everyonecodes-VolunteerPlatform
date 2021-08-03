@@ -5,9 +5,10 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.apache.commons.validator.routines.EmailValidator;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -31,5 +32,10 @@ public class UserService {
         }
 
         return Optional.empty();
+    }
+
+    public boolean isEmailValid(String email) {
+        Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        return pattern.matcher(email).matches();
     }
 }
