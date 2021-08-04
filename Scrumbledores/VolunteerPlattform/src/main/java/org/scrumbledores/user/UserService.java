@@ -40,8 +40,6 @@ public class UserService {
         return user.get();
     }
 
-
-
     public boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         return pattern.matcher(email).matches();
@@ -50,5 +48,36 @@ public class UserService {
     public boolean isUsernameValid(String username) {
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9]*$");
         return pattern.matcher(username).matches();
+    }
+
+    public PlatformDTO showPersonalData(String username) {
+        Optional<PlatformUser> oUser = repository.findOneByUsername(username);
+        if (oUser.isEmpty()) {
+            return null;
+        }
+        return platformUserToDto(oUser.get());
+    }
+
+    public PlatformDTO editPersonalData(PlatformDTO dto, String username) {
+        Optional<PlatformUser> oUser = repository.findOneByUsername(username);
+        if (oUser.isEmpty()) {
+            return null;
+        }
+        PlatformUser user = oUser.get();
+        user.setFullname(dto.getFullname());
+        user.setDateOfBirth(dto.getDateOfBirth());
+        user.setAddress(dto.getAddress());
+        user.setEmail(dto.getEmail());
+        user.setDescription(dto.getDescription());
+        repository.save(user);
+        return platformUserToDto(user);
+    }
+
+    private PlatformUser dtoToPlatformUser(PlatformDTO dto) {
+        return new PlatformUser(dto.getUsername(), dto.getRole(), dto.getFullname(), dto.getDateOfBirth(), dto.getAddress(), dto.getEmail(), dto.getDescription());
+    }
+
+    private PlatformDTO platformUserToDto(PlatformUser user) {
+        return new PlatformDTO(user.getUsername(), user.getRole(), user.getFullname(), user.getDateOfBirth(), user.getAddress(), user.getEmail(), user.getDescription());
     }
 }

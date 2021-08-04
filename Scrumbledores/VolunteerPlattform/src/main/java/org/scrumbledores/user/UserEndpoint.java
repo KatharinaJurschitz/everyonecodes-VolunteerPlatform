@@ -31,7 +31,15 @@ public class UserEndpoint {
         return service.findUser(principal);
     }
 
+    @GetMapping("/profile/{username}")
+    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
+    PlatformDTO showPersonalData(@PathVariable String username) {
+        return service.showPersonalData(username);
+    }
 
-
-
+    @PutMapping("/profile/{username}/edit")
+    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
+    PlatformDTO editPersonalData(@RequestBody PlatformDTO dto, @PathVariable String username) {
+        return service.editPersonalData(dto, username);
+    }
 }

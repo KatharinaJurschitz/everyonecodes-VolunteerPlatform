@@ -1,0 +1,30 @@
+###
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com"
+}
+
+###
+GET http://localhost:9000/users/profile/RumbleDumble
+Authorization: Basic RumbleDumble wizard
+
+###
+PUT http://localhost:9000/users/profile/RumbleDumble/edit
+Authorization:
+Content-Type: application/json
+
+{
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "kjurschitz@gmail.com",
+  "description": "You're a wizard, Harry!"
+}
