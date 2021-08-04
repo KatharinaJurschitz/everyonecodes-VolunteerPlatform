@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -72,5 +74,23 @@ public class UserService {
 
     private PlatformDTO platformUserToDto(PlatformUser user) {
         return new PlatformDTO(user.getUsername(), user.getRole(), user.getFullname(), user.getDateOfBirth(), user.getAddress(), user.getEmail(), user.getDescription());
+    }
+
+    public UserPublicDTO showOwnPublicData(Principal principal) {
+        var user = findUser(principal);
+
+        int age;
+
+        if (user.getDateOfBirth() != null) {
+            Period p = Period.between(user.getDateOfBirth().minusYears(1), LocalDate.now());
+            age = p.getYears();
+        } else age = 0;
+
+        return new UserPublicDTO(
+                user.getUsername(),
+                user.getFullname(),
+                age,
+                user.getDescription()
+        );
     }
 }

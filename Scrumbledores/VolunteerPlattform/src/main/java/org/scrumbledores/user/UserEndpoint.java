@@ -42,4 +42,10 @@ public class UserEndpoint {
     PlatformDTO editPersonalData(@RequestBody PlatformDTO dto, Principal principal) {
         return service.editPersonalData(dto, principal);
     }
+    @GetMapping("/profile/public")
+    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
+    UserPublicDTO showOwnPublicData(Principal principal) {
+        return service.showOwnPublicData(principal);
+    }
+
 }
