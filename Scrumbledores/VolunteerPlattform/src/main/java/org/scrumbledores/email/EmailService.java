@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
 
 @Service
 @AllArgsConstructor
@@ -26,6 +27,8 @@ public class EmailService {
             helper.setText(email, true);
             helper.setSubject(subject);
             helper.setFrom("scrumbledore.email@gmail.com");
+            File file = new File("Scrumbledores/VolunteerPlattform/src/main/resources/logo-scrumbledores.png");
+            helper.addAttachment("logo-scrumbledores.png", file);
             mailSender.send(mimeMessage);
             
         } catch (MessagingException e) {
