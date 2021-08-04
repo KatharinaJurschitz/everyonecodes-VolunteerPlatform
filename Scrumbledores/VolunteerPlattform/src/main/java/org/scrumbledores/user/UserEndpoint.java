@@ -31,7 +31,7 @@ public class UserEndpoint {
         return service.findUser(principal);
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/profile/public")
     @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
     UserPublicDTO showOwnPublicData(Principal principal) {
         return service.showOwnPublicData(principal);
