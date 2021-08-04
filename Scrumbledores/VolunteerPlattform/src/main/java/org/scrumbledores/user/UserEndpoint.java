@@ -31,15 +31,15 @@ public class UserEndpoint {
         return service.findUser(principal);
     }
 
-    @GetMapping("/profile/{username}")
+    @GetMapping("/profile")
     @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
-    PlatformDTO showPersonalData(@PathVariable String username) {
-        return service.showPersonalData(username);
+    PlatformDTO showPersonalData(Principal principal) {
+        return service.showPersonalData(principal);
     }
 
-    @PutMapping("/profile/{username}/edit")
+    @PutMapping("/profile/edit")
     @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
-    PlatformDTO editPersonalData(@RequestBody PlatformDTO dto, @PathVariable String username) {
-        return service.editPersonalData(dto, username);
+    PlatformDTO editPersonalData(@RequestBody PlatformDTO dto, Principal principal) {
+        return service.editPersonalData(dto, principal);
     }
 }

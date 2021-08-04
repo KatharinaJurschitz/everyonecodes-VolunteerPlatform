@@ -50,20 +50,13 @@ public class UserService {
         return pattern.matcher(username).matches();
     }
 
-    public PlatformDTO showPersonalData(String username) {
-        Optional<PlatformUser> oUser = repository.findOneByUsername(username);
-        if (oUser.isEmpty()) {
-            return null;
-        }
-        return platformUserToDto(oUser.get());
+    public PlatformDTO showPersonalData(Principal principal) {
+        var user = findUser(principal);
+        return platformUserToDto(user);
     }
 
-    public PlatformDTO editPersonalData(PlatformDTO dto, String username) {
-        Optional<PlatformUser> oUser = repository.findOneByUsername(username);
-        if (oUser.isEmpty()) {
-            return null;
-        }
-        PlatformUser user = oUser.get();
+    public PlatformDTO editPersonalData(PlatformDTO dto, Principal principal) {
+        var user = findUser(principal);
         user.setFullname(dto.getFullname());
         user.setDateOfBirth(dto.getDateOfBirth());
         user.setAddress(dto.getAddress());

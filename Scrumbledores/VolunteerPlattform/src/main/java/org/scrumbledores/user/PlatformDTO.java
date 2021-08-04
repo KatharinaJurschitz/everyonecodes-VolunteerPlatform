@@ -11,7 +11,6 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
 public class PlatformDTO {
     private String id;
     private String username;
