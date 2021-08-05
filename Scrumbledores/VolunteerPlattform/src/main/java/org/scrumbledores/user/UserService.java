@@ -2,6 +2,9 @@ package org.scrumbledores.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.scrumbledores.user.dataclass.PlatformDTO;
+import org.scrumbledores.user.dataclass.PlatformUser;
+import org.scrumbledores.user.dataclass.UserPublicDTO;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

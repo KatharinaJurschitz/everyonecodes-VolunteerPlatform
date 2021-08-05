@@ -1,6 +1,9 @@
 package org.scrumbledores.user;
 
 import lombok.AllArgsConstructor;
+import org.scrumbledores.user.dataclass.PlatformDTO;
+import org.scrumbledores.user.dataclass.PlatformUser;
+import org.scrumbledores.user.dataclass.UserPublicDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;

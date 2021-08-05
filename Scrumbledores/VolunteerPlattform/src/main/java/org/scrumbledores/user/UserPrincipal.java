@@ -1,6 +1,7 @@
 package org.scrumbledores.user;
 
 import lombok.AllArgsConstructor;
+import org.scrumbledores.user.dataclass.PlatformUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

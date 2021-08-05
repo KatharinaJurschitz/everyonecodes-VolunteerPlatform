@@ -1,4 +1,4 @@
-package org.scrumbledores.user;
+package org.scrumbledores.user.dataclass;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

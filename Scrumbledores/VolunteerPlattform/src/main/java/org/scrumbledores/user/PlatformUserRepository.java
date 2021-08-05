@@ -1,5 +1,6 @@
 package org.scrumbledores.user;
 
+import org.scrumbledores.user.dataclass.PlatformUser;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
