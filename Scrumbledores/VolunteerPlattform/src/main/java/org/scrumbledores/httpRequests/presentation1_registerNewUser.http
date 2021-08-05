@@ -1,0 +1,50 @@
+###
+// regular user
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+
+###
+// dublicate username
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+
+###
+// valid email
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble7",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmasterhogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+

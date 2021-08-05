@@ -1,0 +1,20 @@
+// show own profile data
+###
+GET http://localhost:9000/users/profile
+Authorization: Basic RumbleDumble wizard
+
+
+// edit own profile data
+###
+PUT http://localhost:9000/users/profile/edit
+Authorization: Basic RumbleDumble wizard
+Content-Type: application/json
+
+{
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+

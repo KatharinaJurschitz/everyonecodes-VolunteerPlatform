@@ -1,0 +1,26 @@
+
+###
+// create login user - noemi.bagameriATgmail.com
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "LoginUser",
+  "password": "login",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Login User",
+  "email": "zeplichalmike@gmail.com"
+}
+
+###
+//correct login
+GET http://localhost:9000/users/login
+Authorization: Basic LoginUser login
+
+// (Cookies löschen)
+
+###
+//wrong credentials (show in database)
+GET http://localhost:9000/users/login
+Authorization: Basic LoginUser wrongPassword
+

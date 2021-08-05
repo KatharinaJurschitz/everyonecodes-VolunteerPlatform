@@ -1,0 +1,7 @@
+
+###
+// show own profile as seen by others
+GET http://localhost:9000/users/profile/public
+Authorization: Basic RumbleDumble wizard
+
+

@@ -27,8 +27,8 @@ public class UserEndpoint {
 
     @GetMapping("/login")
     @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
-    PlatformUser login(Principal principal) {
-        return service.findUser(principal);
+    PlatformDTO login(Principal principal) {
+        return service.findUserDTO(principal);
     }
 
     @GetMapping("/profile")

@@ -1,0 +1,223 @@
+###
+// regular user
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// user with minimal details
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+"username": "RumbleDumble8",
+"password": "wizard",
+"role": ["ROLE_VOLUNTEER"],
+"fullname": "Albus Dumbledore",
+"email": "headmaster8@hogwarts.com"
+}
+
+###
+// dublicate username
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// username wrong signs
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble!!",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster6@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// dublicate email
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble2",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// valid email
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble7",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmasterhogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// username empty
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster3@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// password empty
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble3",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster3@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// role empty
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble4",
+  "password": "wizard",
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// fullname empty
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble5",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaste5@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// email empty
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble6",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "description": "You're a wizard, Harry!"
+}
+
+
+
+
+
+
+###
+// creat login user - noemi.bagameriATgmail.com
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "LoginUser",
+  "password": "login",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Login User",
+  "email": "zeplichalmike@gmail.com"
+}
+
+###
+//correct login
+GET http://localhost:9000/users/login
+Authorization: Basic LoginUser login
+
+// (Cookies löschen)
+
+###
+//wrong credentials (show in database)
+GET http://localhost:9000/users/login
+Authorization: Basic LoginUser wrongPassword
+
+
+###
+GET http://localhost:9000/users/profile
+Authorization: Basic RumbleDumble wizard
+
+
+###
+PUT http://localhost:9000/users/profile/edit
+Authorization: Basic RumbleDumble wizard
+Content-Type: application/json
+
+{
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "kjurschitz@gmail.com",
+  "description": "You're a wizard, Harry!"
+}
+
+
+###
+// show own profile as seen by others
+GET http://localhost:9000/users/profile/public
+Authorization: Basic RumbleDumble wizard
+
+

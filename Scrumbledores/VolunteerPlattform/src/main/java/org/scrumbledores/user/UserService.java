@@ -42,6 +42,11 @@ public class UserService {
         return user.get();
     }
 
+    public PlatformDTO findUserDTO(Principal principal) {
+        Optional<PlatformUser> user = repository.findOneByUsername(principal.getName());
+        return platformUserToDto(user.get());
+    }
+
     public boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         return pattern.matcher(email).matches();
@@ -59,11 +64,11 @@ public class UserService {
 
     public PlatformDTO editPersonalData(PlatformDTO dto, Principal principal) {
         var user = findUser(principal);
-        if (dto.getFullname().isEmpty() || dto.getFullname() == null) {
-            user.setFullname(repository.findOneByUsername(principal.getName()).get().getFullname());
+        if (dto.getFullname() != null && !dto.getFullname().isEmpty()) {
+            user.setFullname(dto.getFullname());
         }
-        if (dto.getEmail().isEmpty() || dto.getEmail() == null) {
-            user.setEmail(repository.findOneByUsername(principal.getName()).get().getEmail());
+        if (dto.getEmail() != null && isEmailValid(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
         }
 
         user.setDateOfBirth(dto.getDateOfBirth());
