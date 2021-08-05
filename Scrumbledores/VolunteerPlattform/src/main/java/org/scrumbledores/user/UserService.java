@@ -82,7 +82,7 @@ public class UserService {
         int age;
 
         if (user.getDateOfBirth() != null) {
-            Period p = Period.between(user.getDateOfBirth().minusYears(1), LocalDate.now());
+            Period p = Period.between(user.getDateOfBirth(), LocalDate.now());
             age = p.getYears();
         } else age = 0;
 

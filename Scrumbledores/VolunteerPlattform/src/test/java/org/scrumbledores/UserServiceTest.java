@@ -29,9 +29,6 @@ public class UserServiceTest {
     PlatformUserRepository repository;
 
 
-    PasswordEncoder encoder;
-    Set<String> roles;
-
     @Test
     void testCreateUserSuccessful() {
         PlatformUser platformUser = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "scrumbledore.email@gmail.com", "test");
@@ -43,35 +40,35 @@ public class UserServiceTest {
 
     @Test
     void testCreateUserFailBecauseEmail() {
-        PlatformUser platformUser = new PlatformUser("test!!", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "test@email.com", "test");
+        PlatformUser platformUser = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "testemail.com", "test");
         Optional<PlatformUser> result = service.createUser(platformUser);
         Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     void testCreateUserFailBecauseUsername() {
-        PlatformUser platformUser = new PlatformUser("test!!", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "test", "test");
+        PlatformUser platformUser = new PlatformUser("test!!", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "scrumbledore.email@gmail.com", "test");
         Optional<PlatformUser> result = service.createUser(platformUser);
         Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     void testCreateUserFailBecauseRoleSizeMoreThanOne() {
-        PlatformUser platformUser = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER", "ROLE_INDIVIDUAL"), "test", LocalDate.now(), "test", "test", "test");
+        PlatformUser platformUser = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER", "ROLE_INDIVIDUAL"), "test", LocalDate.now(), "test", "scrumbledore.email@gmail.com", "test");
         Optional<PlatformUser> result = service.createUser(platformUser);
         Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     void testCreateUserFailBecauseRoleSizeEmpty() {
-        PlatformUser platformUser = new PlatformUser("test", "test", Set.of(), "test", LocalDate.now(), "test", "test", "test");
+        PlatformUser platformUser = new PlatformUser("test", "test", Set.of(), "test", LocalDate.now(), "test", "scrumbledore.email@gmail.com", "test");
         Optional<PlatformUser> result = service.createUser(platformUser);
         Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
     void testCreateUserFailBecauseFalseRole() {
-        PlatformUser platformUser = new PlatformUser("test", "test", Set.of("ROLE_TEST"), "test", LocalDate.now(), "test", "test", "test");
+        PlatformUser platformUser = new PlatformUser("test", "test", Set.of("ROLE_TEST"), "test", LocalDate.now(), "test", "scrumbledore.email@gmail.com", "test");
         Optional<PlatformUser> result = service.createUser(platformUser);
         Assertions.assertTrue(result.isEmpty());
     }

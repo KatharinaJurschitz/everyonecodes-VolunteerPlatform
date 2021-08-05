@@ -20,7 +20,7 @@ public class UserEndpoint {
     PlatformUser create(@Valid @RequestBody PlatformUser user) {
         var oUser = service.createUser(user);
         if (oUser.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role Definition Error");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User Creation Error");
         }
         return  oUser.get();
     }
