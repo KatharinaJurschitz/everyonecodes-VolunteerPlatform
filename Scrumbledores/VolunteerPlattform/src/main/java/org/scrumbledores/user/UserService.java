@@ -59,10 +59,15 @@ public class UserService {
 
     public PlatformDTO editPersonalData(PlatformDTO dto, Principal principal) {
         var user = findUser(principal);
-        user.setFullname(dto.getFullname());
+        if (dto.getFullname().isEmpty() || dto.getFullname() == null) {
+            user.setFullname(repository.findOneByUsername(principal.getName()).get().getFullname());
+        }
+        if (dto.getEmail().isEmpty() || dto.getEmail() == null) {
+            user.setEmail(repository.findOneByUsername(principal.getName()).get().getEmail());
+        }
+
         user.setDateOfBirth(dto.getDateOfBirth());
         user.setAddress(dto.getAddress());
-        user.setEmail(dto.getEmail());
         user.setDescription(dto.getDescription());
         repository.save(user);
         return platformUserToDto(user);
