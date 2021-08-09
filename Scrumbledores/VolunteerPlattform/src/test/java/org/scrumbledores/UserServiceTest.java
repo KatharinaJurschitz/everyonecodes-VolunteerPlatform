@@ -100,6 +100,23 @@ public class UserServiceTest {
 
     @ParameterizedTest
     @CsvSource({
+            "gardening, true",
+            "gardening; cooking, true",
+            "gardening;cooking, true",
+            "gardening;; cooking, true",
+            ";gardening; cooking, true",
+            "gardening; cooking;, true",
+            "gardening cooking, true",
+            "garden9, false",
+            "garden:, false",
+    })
+    void isSkillsValidTest(String input, boolean expected) {
+        var result = service.isSkillsValid(input);
+        Assertions.assertEquals(expected, result);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
             "user, true",
             "u, true",
             "user1, true",

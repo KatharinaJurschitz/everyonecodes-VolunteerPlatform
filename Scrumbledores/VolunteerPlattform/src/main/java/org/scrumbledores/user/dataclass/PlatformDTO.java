@@ -21,6 +21,7 @@ public class PlatformDTO {
     private String address;
     private String email;
     private String description;
+    private String skills;
 
 
     public PlatformDTO(String fullname, LocalDate dateOfBirth, String address, String email, String description) {

@@ -33,6 +33,9 @@ public class UserService {
             if (roles.containsAll(input.getRole())) {
                 String passwordEncoded = encoder.encode(input.getPassword());
                 input.setPassword(passwordEncoded);
+                if (!input.getRole().stream().findFirst().get().equals("ROLE_VOLUNTEER")) {
+                    input.setSkills(null);
+                }
                 return Optional.of(repository.save(input));
             }
         }
@@ -60,6 +63,11 @@ public class UserService {
         return pattern.matcher(username).matches();
     }
 
+    public boolean isSkillsValid(String skills) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z\s]*(?:;[a-zA-Z\s]*)*$");
+        return pattern.matcher(skills).matches();
+    }
+
     public PlatformDTO showPersonalData(Principal principal) {
         var user = findUser(principal);
         return platformUserToDto(user);
@@ -73,6 +81,9 @@ public class UserService {
         if (dto.getEmail() != null && isEmailValid(dto.getEmail())) {
             user.setEmail(dto.getEmail());
         }
+        if (isSkillsValid(dto.getSkills()) && user.getRole().stream().findFirst().get().equals("ROLE_VOLUNTEER")) {
+            user.setSkills(dto.getSkills());
+        }
 
         user.setDateOfBirth(dto.getDateOfBirth());
         user.setAddress(dto.getAddress());
@@ -82,11 +93,13 @@ public class UserService {
     }
 
     private PlatformUser dtoToPlatformUser(PlatformDTO dto) {
-        return new PlatformUser(dto.getUsername(), dto.getRole(), dto.getFullname(), dto.getDateOfBirth(), dto.getAddress(), dto.getEmail(), dto.getDescription());
+        return new PlatformUser(dto.getUsername(), dto.getRole(), dto.getFullname(), dto.getDateOfBirth(),
+                dto.getAddress(), dto.getEmail(), dto.getDescription());
     }
 
     private PlatformDTO platformUserToDto(PlatformUser user) {
-        return new PlatformDTO(user.getUsername(), user.getRole(), user.getFullname(), user.getDateOfBirth(), user.getAddress(), user.getEmail(), user.getDescription());
+        return new PlatformDTO(user.getUsername(), user.getRole(), user.getFullname(), user.getDateOfBirth(),
+                user.getAddress(), user.getEmail(), user.getDescription(), user.getSkills());
     }
 
     public UserPublicDTO showOwnPublicData(Principal principal) {
@@ -103,7 +116,8 @@ public class UserService {
                 user.getUsername(),
                 user.getFullname(),
                 age,
-                user.getDescription()
+                user.getDescription(),
+                user.getSkills()
         );
     }
 }

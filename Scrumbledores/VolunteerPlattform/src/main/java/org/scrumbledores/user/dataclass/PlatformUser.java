@@ -33,6 +33,7 @@ public class PlatformUser {
     private String email;
     private String description;
     private int failedLoginAttempt = 0;
+    private String skills;
 
     public PlatformUser(String username, String password, Set<String> role, String fullname, LocalDate dateOfBirth, String address, String email, String description) {
         this.username = username;
