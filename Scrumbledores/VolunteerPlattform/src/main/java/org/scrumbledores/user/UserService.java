@@ -64,7 +64,7 @@ public class UserService {
     }
 
     public boolean isSkillsValid(String skills) {
-        Pattern pattern = Pattern.compile("^[a-zA-Z\s]*(?:;[a-zA-Z\s]*)*$");
+        Pattern pattern = Pattern.compile("^([a-zA-Z ]+;?[a-zA-Z ]*)*[a-zA-Z]+$");
         return pattern.matcher(skills).matches();
     }
 
