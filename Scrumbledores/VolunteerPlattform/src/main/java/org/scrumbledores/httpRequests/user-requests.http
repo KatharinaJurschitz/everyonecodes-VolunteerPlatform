@@ -220,4 +220,26 @@ Content-Type: application/json
 GET http://localhost:9000/users/profile/public
 Authorization: Basic RumbleDumble wizard
 
+###
+GET http://localhost:9000/apptree
+Authorization: Basic RumbleDumble wizard
 
+###
+// regular user
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble10",
+  "password": "wizard",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster10@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+GET http://localhost:9000/apptree
+Authorization: Basic RumbleDumble10 wizard
