@@ -15,6 +15,6 @@ Content-Type: application/json
   "dateOfBirth": "1980-10-10",
   "address": "Hogwarts",
   "email": "headmaster@hogwarts.com",
-  "description": "You're a wizard, Harry!"
+  "description": "Changed Description"
 }
 

@@ -1,6 +1,6 @@
 
 ###
-// create login user - noemi.bagameriATgmail.com
+// create login user -
 POST http://localhost:9000/users
 Content-Type: application/json
 
@@ -9,7 +9,7 @@ Content-Type: application/json
   "password": "login",
   "role": ["ROLE_INDIVIDUAL"],
   "fullname": "Login User",
-  "email": "zeplichalmike@gmail.com"
+  "email": "testuser@testmail.com"
 }
 
 ###
