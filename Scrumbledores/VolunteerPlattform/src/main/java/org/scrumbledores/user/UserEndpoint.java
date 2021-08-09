@@ -51,4 +51,10 @@ public class UserEndpoint {
         return service.showOwnPublicData(principal);
     }
 
+    @GetMapping("/profile/{username}")
+    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
+    UserPublicDTO showOtherUserPublicData(@PathVariable String username, Principal principal) {
+        return service.showOtherUserPublicData(username, principal).orElse(null);
+    }
+
 }

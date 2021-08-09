@@ -221,11 +221,12 @@ GET http://localhost:9000/users/profile/public
 Authorization: Basic RumbleDumble wizard
 
 ###
+// show app tree for role volunteer
 GET http://localhost:9000/apptree
 Authorization: Basic RumbleDumble wizard
 
 ###
-// regular user
+// Role Organization User
 POST http://localhost:9000/users
 Content-Type: application/json
 
@@ -240,6 +241,34 @@ Content-Type: application/json
   "description": "You're a wizard, Harry!"
 }
 
-###
+### // show apptree for role organization
 GET http://localhost:9000/apptree
+Authorization: Basic RumbleDumble10 wizard
+
+###
+// Role Individual User
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble11",
+  "password": "wizard",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster11@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+### // show foreign profile - not found
+GET http://localhost:9000/users/profile/afgdfgh
+Authorization: Basic RumbleDumble10 wizard
+
+### // show foreign profile - found but not allowed
+GET http://localhost:9000/users/profile/RumbleDumble11
+Authorization: Basic RumbleDumble10 wizard
+
+### // show foreign profile - found
+GET http://localhost:9000/users/profile/RumbleDumble
 Authorization: Basic RumbleDumble10 wizard
