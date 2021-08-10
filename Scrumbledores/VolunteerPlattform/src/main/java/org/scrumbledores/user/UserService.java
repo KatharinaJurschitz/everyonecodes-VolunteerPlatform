@@ -99,7 +99,7 @@ public class UserService {
 
     private PlatformDTO platformUserToDto(PlatformUser user) {
         return new PlatformDTO(user.getUsername(), user.getRole(), user.getFullname(), user.getDateOfBirth(),
-                user.getAddress(), user.getEmail(), user.getDescription(), user.getSkills());
+                user.getAddress(), user.getEmail(), user.getDescription(), user.getSkills(), user.getRating());
     }
 
     public UserPublicDTO showOwnPublicData(Principal principal) {
@@ -117,7 +117,8 @@ public class UserService {
                 user.getFullname(),
                 age,
                 user.getDescription(),
-                user.getSkills()
+                user.getSkills(),
+                user.getRating()
         );
     }
 }

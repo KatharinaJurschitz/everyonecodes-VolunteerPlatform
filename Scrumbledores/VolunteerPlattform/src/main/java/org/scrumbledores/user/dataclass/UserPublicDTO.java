@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Set;
 
 @Data
@@ -16,5 +18,8 @@ public class UserPublicDTO {
     private int age;
     private String description;
     private String skills;
+    @Min(1)
+    @Max(5)
+    private double rating = 0;
 
 }

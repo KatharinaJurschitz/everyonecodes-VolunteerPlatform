@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Set;
@@ -34,6 +36,9 @@ public class PlatformUser {
     private String description;
     private int failedLoginAttempt = 0;
     private String skills;
+    @Min(1)
+    @Max(5)
+    private double rating = 0;
 
     public PlatformUser(String username, String password, Set<String> role, String fullname, LocalDate dateOfBirth, String address, String email, String description) {
         this.username = username;

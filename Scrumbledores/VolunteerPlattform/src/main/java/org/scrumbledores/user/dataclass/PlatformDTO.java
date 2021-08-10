@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -22,6 +24,9 @@ public class PlatformDTO {
     private String email;
     private String description;
     private String skills;
+    @Min(1)
+    @Max(5)
+    private double rating = 0;
 
 
     public PlatformDTO(String fullname, LocalDate dateOfBirth, String address, String email, String description) {
