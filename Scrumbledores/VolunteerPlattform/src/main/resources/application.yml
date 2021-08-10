@@ -23,3 +23,27 @@ platformuser:
     - ROLE_VOLUNTEER
     - ROLE_ORGANIZATION
     - ROLE_INDIVIDUAL
+
+apptree:
+  actions:
+    - |       # ROLE_VOLUNTEER
+        *Profile
+          Edit profile
+          View my profile as seen by others
+
+        *Search
+          Search for organizations/individuals
+    - |       # ROLE_ORGANIZATION
+        *Profile
+          Edit profile
+          View my profile as seen by others
+
+        *Search
+          Search for volunteers
+    - |       # ROLE_INDIVIDUAL
+        *Profile
+          Edit profile
+          View my profile as seen by others
+
+        *Search
+          Search for volunteers

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -105,6 +106,11 @@ public class UserService {
     public UserPublicDTO showOwnPublicData(Principal principal) {
         var user = findUser(principal);
 
+        return platformUserToUserPublicDTO(user);
+    }
+
+    private UserPublicDTO platformUserToUserPublicDTO(PlatformUser user) {
+
         int age;
 
         if (user.getDateOfBirth() != null) {
@@ -120,5 +126,38 @@ public class UserService {
                 user.getSkills(),
                 user.getRating()
         );
+    }
+
+    public Optional<UserPublicDTO> showOtherUserPublicData(String username, Principal principal) {
+
+        var user = findUser(principal);
+        var role = new ArrayList<>(user.getRole()).get(0);
+        var oResult = repository.findOneByUsername(username);
+        if (oResult.isEmpty()) {
+            return Optional.empty();
+        }
+
+        var result = oResult.get();
+        var resultRole = new ArrayList<>(result.getRole()).get(0);
+
+        switch (role) {
+            case "ROLE_VOLUNTEER":
+                if (resultRole.equals("ROLE_ORGANIZATION") || resultRole.equals("ROLE_INDIVIDUAL")) {
+                    return Optional.of(platformUserToUserPublicDTO(result));
+                }
+
+            case "ROLE_ORGANIZATION":
+                if (resultRole.equals("ROLE_VOLUNTEER")) {
+                    return Optional.of(platformUserToUserPublicDTO(result));
+                }
+
+            case "ROLE_INDIVIDUAL":
+                if (resultRole.equals("ROLE_VOLUNTEER")) {
+                    return Optional.of(platformUserToUserPublicDTO(result));
+                }
+
+            default:
+                return Optional.empty();
+        }
     }
 }
