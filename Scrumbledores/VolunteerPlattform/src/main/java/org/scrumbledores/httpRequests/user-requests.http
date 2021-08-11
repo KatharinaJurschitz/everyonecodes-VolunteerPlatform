@@ -272,3 +272,30 @@ Authorization: Basic RumbleDumble10 wizard
 ### // show foreign profile - found
 GET http://localhost:9000/users/profile/RumbleDumble
 Authorization: Basic RumbleDumble10 wizard
+
+###
+// Role User for password reset - change email address!!
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble12",
+  "password": "wizard",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "georg.sebastian.palla@gmail.com",
+  "description": "You're a wizard, Harry!"
+}
+
+
+###
+// password reset
+PUT http://localhost:9000/users/profile/password/reset/RumbleDumble12/password5
+
+
+###
+//correct login with new password
+GET http://localhost:9000/users/login
+Authorization: Basic RumbleDumble12 password4

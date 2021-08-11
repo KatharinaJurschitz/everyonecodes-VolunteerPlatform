@@ -18,7 +18,7 @@ public class UserPublicDTO {
     private int age;
     private String description;
     private String skills;
-    @Min(1)
+    @Min(0)
     @Max(5)
     private double rating = 0;
 

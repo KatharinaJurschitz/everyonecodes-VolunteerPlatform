@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 
 @Configuration
@@ -23,6 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(POST, "/users").permitAll()
+                .antMatchers(PUT, "/users/profile/password/reset/**").permitAll()
+                .antMatchers(GET, "/users/profile/password/confirm").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

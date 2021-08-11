@@ -36,7 +36,7 @@ public class PlatformUser {
     private String description;
     private int failedLoginAttempt = 0;
     private String skills;
-    @Min(1)
+    @Min(0)
     @Max(5)
     private double rating = 0;
 

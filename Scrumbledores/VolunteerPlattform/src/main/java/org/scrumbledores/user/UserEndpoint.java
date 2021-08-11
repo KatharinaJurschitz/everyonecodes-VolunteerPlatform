@@ -57,4 +57,14 @@ public class UserEndpoint {
         return service.showOtherUserPublicData(username, principal).orElse(null);
     }
 
+    @PutMapping("/profile/password/reset/{username}/{password}")
+    String resetPassword(@PathVariable String username, @PathVariable String password) {
+        return service.resetPassword(username, password);
+    }
+
+    @GetMapping("/profile/password/confirm")
+    String resetPasswordConfirm(@RequestParam String password) {
+        return service.resetPasswordConfirm(password);
+    }
+
 }

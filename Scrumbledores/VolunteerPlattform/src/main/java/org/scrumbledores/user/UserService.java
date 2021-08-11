@@ -2,19 +2,24 @@ package org.scrumbledores.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.scrumbledores.email.EmailService;
+import org.scrumbledores.user.dataclass.PasswordReset;
 import org.scrumbledores.user.dataclass.PlatformDTO;
 import org.scrumbledores.user.dataclass.PlatformUser;
 import org.scrumbledores.user.dataclass.UserPublicDTO;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @Service
@@ -24,7 +29,9 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final PlatformUserRepository repository;
+    private final PasswordResetRepository passwordResetRepository;
     private final PasswordEncoder encoder;
+    private final EmailService emailService;
     private Set<String> roles;
 
     public Optional<PlatformUser> createUser(PlatformUser input) {
@@ -159,5 +166,36 @@ public class UserService {
             default:
                 return Optional.empty();
         }
+    }
+
+    public String resetPassword(String username, String password) {
+        String token = UUID.randomUUID().toString();
+        var oUser = repository.findOneByUsername(username);
+        if (oUser.isEmpty()) {
+            return "Reset failed";
+        }
+
+        var user = oUser.get();
+
+        passwordResetRepository.save(new PasswordReset(token, LocalDateTime.now().plusMinutes(15), encoder.encode(password), user));
+
+        emailService.sendEmail(user.getEmail(), "Password Reset",
+                "To reset your password click this link <a href=\"http://localhost:9000/users/profile/password/confirm?password=" + token + "\">click me</a>");
+        return "E-Mail with activation link was sent";
+
+    }
+
+    public String resetPasswordConfirm(String confirm) {
+        var reset = passwordResetRepository.findByToken(confirm);
+        if (reset.isPresent()) {
+            if (LocalDateTime.now().isBefore(reset.get().getValidTill())) {
+                var user = reset.get().getUser();
+                user.setPassword(reset.get().getNewPassword());
+                repository.save(user);
+                passwordResetRepository.delete(reset.get());
+                return "Password updated";
+            }
+        }
+        return "Not Valid";
     }
 }
