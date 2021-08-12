@@ -1,0 +1,130 @@
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble6",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster6@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble10",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster10@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// regular user - individual
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble7",
+  "password": "wizard",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster7@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// regular user - individual
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble9",
+  "password": "wizard",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster9@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// regular user - organization
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble8",
+  "password": "wizard",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster8@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// regular user - organization
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble11",
+  "password": "wizard",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster11@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// show individual profile as volunteer - works
+GET http://localhost:9000/users/profile/RumbleDumble7
+Authorization: Basic RumbleDumble6 wizard
+
+###
+// show organization profile as volunteer - works
+GET http://localhost:9000/users/profile/RumbleDumble8
+Authorization: Basic RumbleDumble6 wizard
+
+###
+// show volunteer profile as volunteer - doesnt work
+GET http://localhost:9000/users/profile/RumbleDumble10
+Authorization: Basic RumbleDumble6 wizard
+
+###
+// show individual profile as organization - doesnt work
+GET http://localhost:9000/users/profile/RumbleDumble7
+Authorization: Basic RumbleDumble8 wizard
+
+###
+// show individual profile as individual - doesnt work
+GET http://localhost:9000/users/profile/RumbleDumble7
+Authorization: Basic RumbleDumble9 wizard
+
+###
+// show organization profile as organization - doesnt work
+GET http://localhost:9000/users/profile/RumbleDumble11
+Authorization: Basic RumbleDumble8 wizard
+
+###
+// show organization profile as individual - doesnt work
+GET http://localhost:9000/users/profile/RumbleDumble8
+Authorization: Basic RumbleDumble7 wizard

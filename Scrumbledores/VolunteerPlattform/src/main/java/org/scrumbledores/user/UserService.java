@@ -149,14 +149,16 @@ public class UserService {
 
         switch (role) {
             case "ROLE_VOLUNTEER":
-                if (resultRole.equals("ROLE_ORGANIZATION") || resultRole.equals("ROLE_INDIVIDUAL")) {
+                if (!resultRole.equals("ROLE_VOLUNTEER")) {
                     return Optional.of(platformUserToUserPublicDTO(result));
                 }
+                break;
 
             case "ROLE_ORGANIZATION":
                 if (resultRole.equals("ROLE_VOLUNTEER")) {
                     return Optional.of(platformUserToUserPublicDTO(result));
                 }
+                break;
 
             case "ROLE_INDIVIDUAL":
                 if (resultRole.equals("ROLE_VOLUNTEER")) {
@@ -166,6 +168,7 @@ public class UserService {
             default:
                 return Optional.empty();
         }
+        return Optional.empty();
     }
 
     public String resetPassword(String username, String password) {

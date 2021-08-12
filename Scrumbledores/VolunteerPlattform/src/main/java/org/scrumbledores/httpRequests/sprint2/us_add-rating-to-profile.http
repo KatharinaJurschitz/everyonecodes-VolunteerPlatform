@@ -1,0 +1,20 @@
+###
+// create regular user without rating - rating is 0.0 bc null would be invalid according to User Story (between 1-5)
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble5",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster5@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// show own profile as seen by others
+GET http://localhost:9000/users/profile/public
+Authorization: Basic RumbleDumble5 wizard

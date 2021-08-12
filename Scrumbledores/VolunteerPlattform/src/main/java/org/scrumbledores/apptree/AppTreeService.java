@@ -24,15 +24,11 @@ public class AppTreeService {
         var user = service.findUser(principal);
         var role = new ArrayList<>(user.getRole()).get(0);
 
-        switch (role) {
-            case "ROLE_VOLUNTEER":
-                return actions.get(0);
-            case "ROLE_ORGANIZATION":
-                return actions.get(1);
-            default:
-                return actions.get(2);
-
-        }
+        return switch (role) {
+            case "ROLE_VOLUNTEER" -> actions.get(0);
+            case "ROLE_ORGANIZATION" -> actions.get(1);
+            default -> actions.get(2);
+        };
     }
 
 }

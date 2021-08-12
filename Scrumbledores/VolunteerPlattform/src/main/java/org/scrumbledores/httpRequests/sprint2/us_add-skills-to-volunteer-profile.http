@@ -1,0 +1,79 @@
+###
+// create regular user volunteer with skills
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble2",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster2@hogwarts.com",
+  "description": "You're a wizard, Harry!",
+  "skills": "gardening; cooking"
+}
+
+###
+// create regular user volunteer without skills
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble3",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster3@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// create regular user individual with skills
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble4",
+  "password": "wizard",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster4@hogwarts.com",
+  "description": "You're a wizard, Harry!",
+  "skills": "gardening; cooking"
+}
+
+###
+// edit own profile data - wrong skills-input
+PUT http://localhost:9000/users/profile/edit
+Authorization: Basic RumbleDumble2 wizard
+Content-Type: application/json
+
+{
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "Changed Description",
+  "skills": "gardening; cooking $9"
+}
+
+###
+// edit own profile data - correct skills-input
+PUT http://localhost:9000/users/profile/edit
+Authorization: Basic RumbleDumble2 wizard
+Content-Type: application/json
+
+{
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "Changed Description",
+  "skills": "helping with children; MAGIC"
+}
