@@ -29,5 +29,22 @@ public class ActivityEndpoint {
         return service.getOwnActivitiesAsIndOrg(principal);
     }
 
+    @GetMapping("/drafts")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    List<Activity> getOwnDrafts(Principal principal) {
+        return service.getOwnDrafts(principal);
+    }
+
+    @PutMapping("/drafts/{id}")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    Activity editOwnDraft(Principal principal, @PathVariable String id, @RequestBody ActivityDTO dto) {
+        return service.editOwnDraft(principal, id, dto).orElse(null);
+    }
+
+    @PutMapping("/drafts/{id}/post")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    String postOwnDraft(Principal principal, @PathVariable String id) {
+        return service.postOwnDraft(principal, id);
+    }
 
 }
