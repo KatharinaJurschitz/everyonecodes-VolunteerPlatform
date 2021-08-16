@@ -1,0 +1,53 @@
+###
+// regular user - Individual
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Individual1",
+  "password": "individual",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "individual1@hogwarts.com"
+}
+
+###
+// create new activity
+POST http://localhost:9000/activity/
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+{
+	"title" : "Test Activity2",
+	"description" : "test activity",
+	"startDate" : "2021-08-16T17:00"
+}
+
+###
+// get all own drafts
+GET http://localhost:9000/activity/drafts/
+Authorization: Basic Individual1 individual
+
+###
+// edit one drafted activity
+PUT http://localhost:9000/activity/drafts/5945e9fe-0b9c-45cd-9e91-d606f926d8ee
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+{
+  "title" : "Test Activity",
+  "description" : "test change",
+  "startDate" : "2021-08-17T07:00"
+}
+
+###
+// post one drafted activity
+PUT http://localhost:9000/activity/drafts/5945e9fe-0b9c-45cd-9e91-d606f926d8ee/post
+Authorization: Basic Individual1 individual
+
+###
+// get all own activities
+GET http://localhost:9000/activity/
+Authorization: Basic Individual1 individual
