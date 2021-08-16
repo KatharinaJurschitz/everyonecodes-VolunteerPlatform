@@ -39,6 +39,8 @@ public class PlatformUser {
     @Min(0)
     @Max(5)
     private double rating = 0;
+    private List<Activity> activities;
+    private List<String> notifications;
 
     public PlatformUser(String username, String password, Set<String> role, String fullname, LocalDate dateOfBirth, String address, String email, String description) {
         this.username = username;
