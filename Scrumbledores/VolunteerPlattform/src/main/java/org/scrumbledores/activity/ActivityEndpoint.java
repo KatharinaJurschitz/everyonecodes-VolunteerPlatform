@@ -1,15 +1,13 @@
 package org.scrumbledores.activity;
 
 import lombok.AllArgsConstructor;
-import org.scrumbledores.user.dataclass.Activity;
+import org.scrumbledores.user.dataclass.ActivityDTO;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/activity")
@@ -20,8 +18,14 @@ public class ActivityEndpoint {
 
     @PostMapping()
     @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
-    Activity createActivity(@Valid @RequestBody Activity activity, Principal principal) {
+    ActivityDTO createActivity(@Valid @RequestBody ActivityDTO activity, Principal principal) {
         return service.createActivity(activity, principal);
+    }
+
+    @GetMapping
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    LocalDateTime time() {
+        return LocalDateTime.now();
     }
 
 

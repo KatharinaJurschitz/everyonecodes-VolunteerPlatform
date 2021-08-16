@@ -10,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -40,8 +41,8 @@ public class PlatformUser {
     @Min(0)
     @Max(5)
     private double rating = 0;
-    private List<Activity> activities;
-    private List<String> notifications;
+    private List<Activity> activities = new ArrayList<>();
+    private List<String> notifications = new ArrayList<>();
 
     public PlatformUser(String username, String password, Set<String> role, String fullname, LocalDate dateOfBirth, String address, String email, String description) {
         this.username = username;
