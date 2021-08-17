@@ -1,0 +1,42 @@
+###
+// create regular user
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// show web app tree
+GET http://localhost:9000/apptree
+Authorization: Basic RumbleDumble wizard
+
+###
+// create regular user
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "RumbleDumble99",
+  "password": "wizard",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "headmaster99@hogwarts.com",
+  "description": "You're a wizard, Harry!"
+}
+
+###
+// show web app tree
+GET http://localhost:9000/apptree
+Authorization: Basic RumbleDumble99 wizard
+
