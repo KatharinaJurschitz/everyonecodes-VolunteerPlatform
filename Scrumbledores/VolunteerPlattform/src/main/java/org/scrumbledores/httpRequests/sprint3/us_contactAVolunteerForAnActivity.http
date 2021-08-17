@@ -1,0 +1,81 @@
+###
+// regular user - individual
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Individual3",
+  "password": "individual",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "individual3@hogwarts.com"
+}
+
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer1",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer1@hogwarts.com"
+}
+
+###
+// regular user - organization
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Organization3",
+  "password": "organization",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "organization3@hogwarts.com"
+}
+
+###
+// create new activity
+POST http://localhost:9000/activity/
+Authorization: Basic Individual3 individual
+Content-Type: application/json
+
+{
+  "title" : "Activity Individual",
+  "description" : "activity",
+  "startDate" : "2021-08-16T17:00"
+}
+
+###
+// get all own drafts
+GET http://localhost:9000/activity/drafts/
+Authorization: Basic Individual3 individual
+
+###
+// post one drafted activity
+PUT http://localhost:9000/activity/drafts/bea531ba-c706-4635-b97a-3ebea005834e/post
+Authorization: Basic Individual3 individual
+
+###
+// invite volunteer
+PUT http://localhost:9000/activity/bea531ba-c706-4635-b97a-3ebea005834e/invite/Volunteer1
+Authorization: Basic Individual3 individual
+
+###
+// accept invitation
+PUT http://localhost:9000/activity/bea531ba-c706-4635-b97a-3ebea005834e/accept
+Authorization: Basic Volunteer1 volunteer
+
+###
+// deny invitation
+PUT http://localhost:9000/activity/bea531ba-c706-4635-b97a-3ebea005834e/deny
+Authorization: Basic Volunteer1 volunteer

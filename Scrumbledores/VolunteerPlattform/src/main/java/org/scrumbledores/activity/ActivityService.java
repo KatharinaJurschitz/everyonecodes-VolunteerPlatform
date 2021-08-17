@@ -1,10 +1,12 @@
 package org.scrumbledores.activity;
 
 import lombok.AllArgsConstructor;
+import org.scrumbledores.notification.NotificationService;
 import org.scrumbledores.user.PlatformUserRepository;
 import org.scrumbledores.user.UserService;
 import org.scrumbledores.user.dataclass.Activity;
 import org.scrumbledores.user.dataclass.ActivityDTO;
+import org.scrumbledores.user.dataclass.Rating;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -19,6 +21,7 @@ public class ActivityService {
 
     private final PlatformUserRepository repository;
     private final UserService userService;
+    private final NotificationService notificationService;
 
     public ActivityDTO createActivity(ActivityDTO activityDTO, Principal principal) {
         var user = userService.findUser(principal);
@@ -26,6 +29,7 @@ public class ActivityService {
         var activity = activityDTOToActivity(activityDTO);
 
         activity.setStatus("draft");
+        activity.setCreator(principal.getName());
 
         user.getActivities().add(activity);
         repository.save(user);
@@ -133,5 +137,101 @@ public class ActivityService {
         repository.save(user);
 
         return "Activity " + id + " was posted";
+    }
+
+    public String sendInviteToVolunteer(Principal principal, String id, String username) {
+        var oUser = repository.findOneByUsername(principal.getName());
+        if (oUser.isEmpty()) {
+            return "hearst deppata";
+        }
+        var user = oUser.get();
+
+        var oVolunteer = repository.findOneByUsername(username);
+        if (oVolunteer.isEmpty()) {
+            return "Volunteer not found";
+        }
+        var volunteer = oVolunteer.get();
+
+        var oActivity = user.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("in progress"))
+                .findFirst();
+
+        if (oActivity.isEmpty()) {
+            return "Activity not found or not 'in progress'.";
+        }
+        var activity = oActivity.get();
+        activity.setStatus("pending");
+        volunteer.getActivities().add(activity);
+        repository.save(volunteer);
+        String message = "Hello " + volunteer.getUsername() + ", you are invited to help with this Activity: " + id + ". Please accept or deny. Thank you.";
+
+        if (volunteer.getNotifications().stream()
+                .anyMatch(e -> e.contains(message))) {
+            return "Invitation can't be sent again.";
+        }
+        notificationService.sendNotification(user.getUsername(), volunteer.getUsername(), message);
+
+        return "Notification was sent.";
+    }
+
+    public String acceptDenyInvitation(Principal principal, String id, String acceptdeny) {
+        var oVolunteer = repository.findOneByUsername(principal.getName());
+        if (oVolunteer.isEmpty()) {
+            return "hearst deppata";
+        }
+        var volunteer = oVolunteer.get();
+
+        var oCreator = repository.findOneByActivitiesActivityId(id);
+        if (oCreator.isEmpty()) {
+            return "Activity not found.";
+        }
+        var creator = oCreator.stream()
+                .filter(x -> !x.getRole().contains("ROLE_VOLUNTEER"))
+                .findFirst()
+                .get();
+
+        var oActivity = volunteer.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("pending"))
+                .findFirst();
+
+        if (oActivity.isEmpty()) {
+            return "Activity not found or not 'pending'.";
+        }
+        var activity = oActivity.get();
+
+        if (acceptdeny.equals("accept")) {
+
+            volunteer.getActivities().remove(activity);
+            activity.setStatus("in progress");
+            volunteer.getActivities().add(activity);
+            repository.save(volunteer);
+
+            var oActivityCreator = creator.getActivities().stream()
+                    .filter(x -> x.getActivityId().equals(id))
+                    .findFirst();
+            if (oActivityCreator.isEmpty()) {
+                return "Activity not found.";
+            }
+            var activityCreator = oActivityCreator.get();
+            creator.getActivities().remove(activityCreator);
+            activityCreator.getRatings().add(new Rating(volunteer));
+            creator.getActivities().add(activityCreator);
+            repository.save(creator);
+
+            notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), volunteer.getUsername() + " has accepted your invitation for id: " + id);
+            return "You accepted activity id: " + id;
+
+        } else if (acceptdeny.equals("deny")) {
+            volunteer.getActivities().remove(activity);
+            repository.save(volunteer);
+            notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), volunteer.getUsername() + " has declined your invitation for id: " + id);
+            return "You denied activity id: " + id;
+
+        } else {
+            return "Please type either 'accept' or 'deny'.";
+
+        }
     }
 }

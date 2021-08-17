@@ -15,6 +15,7 @@ import java.util.UUID;
 public class Activity {
 
     private String activityId = UUID.randomUUID().toString();
+    private String creator;
     @NotEmpty
     @Size(max = 40)
     private String title;

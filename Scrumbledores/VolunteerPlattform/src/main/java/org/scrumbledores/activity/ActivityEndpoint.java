@@ -47,4 +47,16 @@ public class ActivityEndpoint {
         return service.postOwnDraft(principal, id);
     }
 
+    @PutMapping("/{id}/invite/{username}")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    String sendInviteToVolunteer(Principal principal, @PathVariable String id, @PathVariable String username) {
+        return service.sendInviteToVolunteer(principal, id, username);
+    }
+
+    @PutMapping("/{id}/{acceptdeny}")
+    @Secured({"ROLE_VOLUNTEER"})
+    String acceptDenyInvitation(Principal principal, @PathVariable String id, @PathVariable String acceptdeny) {
+        return service.acceptDenyInvitation(principal, id, acceptdeny);
+    }
+
 }
