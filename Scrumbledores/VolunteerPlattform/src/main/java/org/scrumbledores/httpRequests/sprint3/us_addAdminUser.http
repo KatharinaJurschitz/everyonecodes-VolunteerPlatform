@@ -1,0 +1,139 @@
+###
+// create another Admin
+POST http://localhost:9000/admin
+Authorization: Basic Admin secret
+Content-Type: application/json
+
+{
+  "username": "Admin2",
+  "password": "secret",
+  "fullname": "Admin2",
+  "email": "admin2@admin.com"
+}
+
+###
+// create another Admin
+POST http://localhost:9000/admin
+Authorization: Basic Admin secret
+Content-Type: application/json
+
+{
+  "username": "Admin2",
+  "password": "secret",
+  "fullname": "Admin2",
+  "email": "admin2@admin.com"
+}
+
+###
+// regular user - individual
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Individual3",
+  "password": "individual",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "individual3@hogwarts.com"
+}
+
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer1",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer1@hogwarts.com"
+}
+
+###
+// regular user - organization
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Organization3",
+  "password": "organization",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "organization3@hogwarts.com"
+}
+
+###
+// regular user - volunteer2
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer2",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer2@hogwarts.com"
+}
+
+###
+// regular user - individual2
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Individual4",
+  "password": "individual",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "individual4@hogwarts.com"
+}
+
+###
+// regular user - organization2
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Organization4",
+  "password": "organization",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "organization4@hogwarts.com"
+}
+
+###
+GET http://localhost:9000/admin/volunteers
+Authorization: Basic Admin secret
+
+###
+GET http://localhost:9000/admin/organizations
+Authorization: Basic Admin secret
+
+###
+GET http://localhost:9000/admin/individuals
+Authorization: Basic Admin secret
+
+###
+GET http://localhost:9000/admin/details/Volunteer2
+Authorization: Basic Admin secret
+
+###
+GET http://localhost:9000/admin/details/Organization3
+Authorization: Basic Admin secret
+
+###
+GET http://localhost:9000/admin/details/Individual4
+Authorization: Basic Admin secret

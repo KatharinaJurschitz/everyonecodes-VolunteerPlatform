@@ -63,4 +63,12 @@ public class PlatformUser {
         this.email = email;
         this.description = description;
     }
+
+    public PlatformUser(String username, String password, String fullname, String email) {
+        this.username = username;
+        this.password = password;
+        this.role = Set.of("ROLE_ADMIN");
+        this.fullname = fullname;
+        this.email = email;
+    }
 }

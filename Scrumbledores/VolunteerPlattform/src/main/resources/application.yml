@@ -23,6 +23,7 @@ platformuser:
     - ROLE_VOLUNTEER
     - ROLE_ORGANIZATION
     - ROLE_INDIVIDUAL
+    - ROLE_ADMIN
 
 apptree:
   actions:
