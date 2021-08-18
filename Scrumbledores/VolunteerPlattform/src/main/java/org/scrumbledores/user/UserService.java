@@ -8,7 +8,6 @@ import org.scrumbledores.user.dataclass.PlatformDTO;
 import org.scrumbledores.user.dataclass.PlatformUser;
 import org.scrumbledores.user.dataclass.UserPublicDTO;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -180,10 +179,10 @@ public class UserService {
 
         var user = oUser.get();
 
-        passwordResetRepository.save(new PasswordReset(token, LocalDateTime.now().plusMinutes(15), encoder.encode(password), user));
+        passwordResetRepository.save(new PasswordReset(token, LocalDateTime.now().plusSeconds(1), encoder.encode(password), user));
 
-        emailService.sendEmail(user.getEmail(), "Password Reset",
-                "To reset your password click this link <a href=\"http://localhost:9000/users/profile/password/confirm?password=" + token + "\">click me</a>");
+//        emailService.sendEmail(user.getEmail(), "Password Reset",
+//                "To reset your password click this link <a href=\"http://localhost:9000/users/profile/password/confirm?password=" + token + "\">click me</a>");
         return "E-Mail with activation link was sent";
 
     }

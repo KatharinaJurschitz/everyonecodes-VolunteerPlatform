@@ -47,3 +47,5 @@ apptree:
 
         *Search
           Search for volunteers
+scheduling:
+  deleteresettoken: 0 0 0 ? * *
