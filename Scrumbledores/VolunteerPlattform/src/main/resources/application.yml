@@ -73,3 +73,5 @@ apptree:
           Post Own Draft
           Send Invite to Volunteer
           Accept or deny applications
+scheduling:
+  deleteresettoken: 0 0 0 ? * *
