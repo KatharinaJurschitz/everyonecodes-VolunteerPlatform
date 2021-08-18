@@ -3,6 +3,7 @@ package org.scrumbledores.activity;
 import lombok.AllArgsConstructor;
 import org.scrumbledores.user.dataclass.Activity;
 import org.scrumbledores.user.dataclass.ActivityDTO;
+import org.scrumbledores.user.dataclass.ActivityVolunteerDTO;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,12 @@ public class ActivityEndpoint {
     @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
     List<Activity> getOwnActivitiesAsIndOrg(Principal principal) {
         return service.getOwnActivitiesAsIndOrg(principal);
+    }
+
+    @GetMapping("/volunteer")
+    @Secured({"ROLE_VOLUNTEER"})
+    List<ActivityVolunteerDTO> getOwnActivitiesAsVolunteer(Principal principal) {
+        return service.getOwnActivitiesAsVolunteer(principal);
     }
 
     @GetMapping("/drafts")
@@ -58,5 +65,30 @@ public class ActivityEndpoint {
     String acceptDenyInvitation(Principal principal, @PathVariable String id, @PathVariable String acceptdeny) {
         return service.acceptDenyInvitation(principal, id, acceptdeny);
     }
+
+    @PutMapping("/{id}/apply")
+    @Secured("ROLE_VOLUNTEER")
+    String sendApplicationToOrgInd(Principal principal, @PathVariable String id) {
+        return service.sendApplicationToOrgInd(principal, id);
+    }
+
+    @PutMapping("/{id}/{username}/{acceptdeny}")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    String acceptDenyApplication(Principal principal, @PathVariable String id, @PathVariable String username, @PathVariable String acceptdeny) {
+        return service.acceptDenyApplication(principal, id, username, acceptdeny);
+    }
+
+//    @PutMapping("/{id}/rating/{volunteerID}")
+//    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+//    String completeActivity(Principal principal, @PathVariable String id, @PathVariable String volunteerID) {
+//        return service.rateVolunteer(principal, id, volunteerID);
+//    }
+//
+//    @PutMapping("/{id}/complete")
+//    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+//    String completeActivity(Principal principal, @PathVariable String id) {
+//        return service.completeActivity(principal, id);
+//    }
+
 
 }

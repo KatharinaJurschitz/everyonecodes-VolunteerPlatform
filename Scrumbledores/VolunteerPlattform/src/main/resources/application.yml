@@ -34,6 +34,11 @@ apptree:
 
         *Search
           Search for organizations/individuals
+          Find all activities
+
+        *My activities
+          Accept or deny invites
+          Apply for activity
     - |       # ROLE_ORGANIZATION
         *Profile
           Edit profile
@@ -41,6 +46,16 @@ apptree:
 
         *Search
           Search for volunteers
+          Find all Volunteers
+
+        *My activities
+          Create activity
+          Get Own Activities
+          Get Own Drafts
+          Edit Own Draft
+          Post Own Draft
+          Send Invite to Volunteer
+          Accept or deny applications
     - |       # ROLE_INDIVIDUAL
         *Profile
           Edit profile
@@ -48,3 +63,13 @@ apptree:
 
         *Search
           Search for volunteers
+          Find all Volunteers
+
+        *My activities
+          Create activity
+          Get Own Activities
+          Get Own Drafts
+          Edit Own Draft
+          Post Own Draft
+          Send Invite to Volunteer
+          Accept or deny applications

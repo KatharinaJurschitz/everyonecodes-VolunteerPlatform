@@ -1,0 +1,168 @@
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer1",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer1@hogwarts.com"
+}
+
+###
+// regular user - organization
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Organization1",
+  "password": "organization",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "organization1@hogwarts.com"
+}
+
+###
+// regular user - volunteer2
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer2",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer2@hogwarts.com"
+}
+
+###
+// regular user - volunteer3
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer3",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer3@hogwarts.com"
+}
+
+
+###
+// create new activity
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "Test Activity2",
+  "description" : "test activity",
+  "startDate" : "2021-08-16T17:00"
+}
+
+###
+// get all own drafts
+GET http://localhost:9000/activity/drafts/
+Authorization: Basic Organization1 organization
+
+###
+// post one drafted activity
+PUT http://localhost:9000/activity/drafts/90851d34-2555-46bc-a07d-fb179732049f/post
+Authorization: Basic Organization1 organization
+
+
+###
+// apply for activity v1
+PUT http://localhost:9000/activity/90851d34-2555-46bc-a07d-fb179732049f/apply/
+Authorization:  Basic Volunteer1 volunteer
+
+###
+// apply for activity v2
+PUT http://localhost:9000/activity/90851d34-2555-46bc-a07d-fb179732049f/apply/
+Authorization:  Basic Volunteer2 volunteer
+
+###
+// apply for activity v3
+PUT http://localhost:9000/activity/90851d34-2555-46bc-a07d-fb179732049f/apply/
+Authorization:  Basic Volunteer3 volunteer
+
+###
+// accept volunteer1 for activity 1
+PUT http://localhost:9000/activity/90851d34-2555-46bc-a07d-fb179732049f/Volunteer1/accept
+Authorization:  Basic Organization1 organization
+
+###
+// accept volunteer2 for activity 1
+PUT http://localhost:9000/activity/90851d34-2555-46bc-a07d-fb179732049f/Volunteer2/accept
+Authorization:  Basic Organization1 organization
+
+###
+// accept volunteer3 for activity 1
+PUT http://localhost:9000/activity/90851d34-2555-46bc-a07d-fb179732049f/Volunteer3/accept
+Authorization:  Basic Organization1 organization
+
+###
+// post second drafted activity 2
+PUT http://localhost:9000/activity/drafts/97aff9d9-2db7-41ca-aa00-ea13a2cb09b1/post
+Authorization: Basic Organization1 organization
+
+###
+// apply for activity 2
+PUT http://localhost:9000/activity/97aff9d9-2db7-41ca-aa00-ea13a2cb09b1/apply/
+Authorization:  Basic Volunteer1 volunteer
+
+###
+// apply for activity 2
+PUT http://localhost:9000/activity/97aff9d9-2db7-41ca-aa00-ea13a2cb09b1/apply/
+Authorization:  Basic Volunteer2 volunteer
+
+###
+// accept volunteer1 for activity 2
+PUT http://localhost:9000/activity/97aff9d9-2db7-41ca-aa00-ea13a2cb09b1/Volunteer1/accept
+Authorization:  Basic Organization1 organization
+
+###
+// deny volunteer2 for activity 2
+PUT http://localhost:9000/activity/97aff9d9-2db7-41ca-aa00-ea13a2cb09b1/Volunteer2/deny
+Authorization:  Basic Organization1 organization
+
+###
+// post third drafted activity 3
+PUT http://localhost:9000/activity/drafts/934e0a03-87f2-4df4-9a88-c138464fa5b6/post
+Authorization: Basic Organization1 organization
+
+###
+// apply for activity 3
+PUT http://localhost:9000/activity/934e0a03-87f2-4df4-9a88-c138464fa5b6/apply/
+Authorization:  Basic Volunteer1 volunteer
+
+###
+// accept volunteer1 for activity 3
+PUT http://localhost:9000/activity/934e0a03-87f2-4df4-9a88-c138464fa5b6/Volunteer1/accept
+Authorization:  Basic Organization1 organization
+
+###
+// List own activities
+GET http://localhost:9000/activity/volunteer/
+Authorization: Basic Volunteer1 volunteer
+
+###
+// List own activities
+GET http://localhost:9000/activity/volunteer/
+Authorization: Basic Volunteer2 volunteer
+
+###
+// List own activities
+GET http://localhost:9000/activity/volunteer/
+Authorization: Basic Volunteer3 volunteer

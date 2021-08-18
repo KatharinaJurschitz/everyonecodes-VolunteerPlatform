@@ -6,6 +6,7 @@ import org.scrumbledores.user.PlatformUserRepository;
 import org.scrumbledores.user.UserService;
 import org.scrumbledores.user.dataclass.Activity;
 import org.scrumbledores.user.dataclass.ActivityDTO;
+import org.scrumbledores.user.dataclass.ActivityVolunteerDTO;
 import org.scrumbledores.user.dataclass.Rating;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,9 @@ public class ActivityService {
         var activity = activityDTOToActivity(activityDTO);
 
         activity.setStatus("draft");
-        activity.setCreator(principal.getName());
+        activity.setCreatorName(principal.getName());
+        activity.setCreatorRole(user.getRole().stream().findFirst().get());
+        activity.setCreatorRating(user.getRating());
 
         user.getActivities().add(activity);
         repository.save(user);
@@ -215,12 +218,20 @@ public class ActivityService {
                 return "Activity not found.";
             }
             var activityCreator = oActivityCreator.get();
+
+            volunteer.getActivities().remove(activity);
+            activity.getRatings().add(new Rating(creator));
+            volunteer.getActivities().add(activity);
+
             creator.getActivities().remove(activityCreator);
             activityCreator.getRatings().add(new Rating(volunteer));
             creator.getActivities().add(activityCreator);
+
             repository.save(creator);
+            repository.save(volunteer);
 
             notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), volunteer.getUsername() + " has accepted your invitation for id: " + id);
+
             return "You accepted activity id: " + id;
 
         } else if (acceptdeny.equals("deny")) {
@@ -233,5 +244,127 @@ public class ActivityService {
             return "Please type either 'accept' or 'deny'.";
 
         }
+    }
+
+    public String sendApplicationToOrgInd(Principal principal, String id) {
+        var volunteer = userService.findUser(principal);
+        var oCreator = repository.findOneByActivitiesActivityId(id);
+        if (oCreator.isEmpty()) {
+            return "Activity not found.";
+        }
+        var creator = oCreator.stream()
+                .filter(x -> !x.getRole().contains("ROLE_VOLUNTEER"))
+                .findFirst()
+                .get();
+
+        var oActivity = creator.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("in progress"))
+                .findFirst();
+        if (oActivity.isEmpty()) {
+            return "Activity not found or not 'in progress'.";
+        }
+        var activity = oActivity.get();
+        activity.setStatus("pending");
+        volunteer.getActivities().add(activity);
+        repository.save(volunteer);
+        String message = volunteer.getUsername() + " has applied for activity id: " + id;
+        notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), message);
+
+        return "Application for activity " + id + " was sent.";
+    }
+
+    public String acceptDenyApplication(Principal principal, String id, String username, String acceptdeny) {
+        var oOrgInd = repository.findOneByUsername(principal.getName());
+        if (oOrgInd.isEmpty()) {
+            return "hearst deppata";
+        }
+        var orgInd = oOrgInd.get();
+
+        var volunteers = repository.findOneByActivitiesActivityId(id);
+        if (volunteers.isEmpty()) {
+            return "No volunteers found for this activity.";
+        }
+        var oVolunteer = volunteers.stream()
+                .filter(x -> x.getUsername().equals(username))
+                .findFirst();
+        if (oVolunteer.isEmpty()) {
+            return "Volunteer not found.";
+        }
+        var volunteer = oVolunteer.get();
+
+        var oActivity = orgInd.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("in progress"))
+                .findFirst();
+
+        if (oActivity.isEmpty()) {
+            return "Activity not found or not 'in progress'.";
+        }
+        var activity = oActivity.get();
+
+        var oActivityVolunteer = volunteer.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .findFirst();
+        if (oActivityVolunteer.isEmpty()) {
+            return "Activity not found.";
+        }
+        var activityVolunteer = oActivityVolunteer.get();
+
+        if (acceptdeny.equals("accept")) {
+            orgInd.getActivities().remove(activity);
+            activity.getRatings().add(new Rating(volunteer));
+            orgInd.getActivities().add(activity);
+
+            volunteer.getActivities().remove(activityVolunteer);
+            activityVolunteer.getRatings().add(new Rating(orgInd));
+            activityVolunteer.setStatus("in progress");
+            volunteer.getActivities().add(activityVolunteer);
+
+            repository.save(volunteer);
+            repository.save(orgInd);
+
+            notificationService.sendNotification(orgInd.getUsername(), volunteer.getUsername(), volunteer.getUsername() + ", your application for id: " + id + " was accepted.");
+
+            return "You accepted the application by " + volunteer.getUsername() + " for activity id: " + id;
+
+        } else if (acceptdeny.equals("deny")) {
+            volunteer.getActivities().remove(activityVolunteer);
+            repository.save(volunteer);
+
+            notificationService.sendNotification(orgInd.getUsername(), volunteer.getUsername(), volunteer.getUsername() + ", your application for id: " + id + " was declined.");
+
+            return "You denied the application by " + volunteer.getUsername() + " for activity id: " + id;
+
+        } else {
+            return "Please type either 'accept' or 'deny'.";
+
+        }
+    }
+
+    public List<ActivityVolunteerDTO> getOwnActivitiesAsVolunteer(Principal principal) {
+        var volunteer = userService.findUser(principal);
+        return volunteer.getActivities().stream()
+                .map(this::activityToActivityVolunteerDTO)
+                .collect(Collectors.toList());
+    }
+
+    private ActivityVolunteerDTO activityToActivityVolunteerDTO(Activity activity) {
+        List<Rating> ratings = activity.getRatings();
+
+        return new ActivityVolunteerDTO(
+                activity.getTitle(),
+                activity.getDescription(),
+                activity.getStatus(),
+                activity.getStartDate(),
+                activity.getEndDate(),
+                activity.getCreatorName(),
+                activity.getCreatorRole(),
+                activity.getCreatorRating(),
+                ratings.stream().map(Rating::getRatingFromParticipant).findFirst().orElse(0),
+                ratings.stream().filter(x -> x.getFeedbackFromParticipant() != null).map(Rating::getFeedbackFromParticipant).findFirst().orElse(""),
+                ratings.stream().map(Rating::getRatingFromCreator).findFirst().orElse(0),
+                ratings.stream().filter(x -> x.getFeedbackFromCreator() != null).map(Rating::getFeedbackFromCreator).findFirst().orElse("")
+        );
     }
 }
