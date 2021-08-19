@@ -76,16 +76,16 @@ Content-Type: application/json
 }
 
 ###
-// regular user - individual2
+// regular user - individual1
 POST http://localhost:9000/users
 Content-Type: application/json
 
 {
-  "username": "Individual2",
+  "username": "Individual1",
   "password": "individual",
   "role": ["ROLE_INDIVIDUAL"],
   "fullname": "Albus Dumbledore",
   "dateOfBirth": "1980-10-10",
   "address": "Hogwarts",
-  "email": "individual2@hogwarts.com"
+  "email": "individual1@hogwarts.com"
 }
