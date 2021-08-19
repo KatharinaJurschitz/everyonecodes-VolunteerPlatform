@@ -219,9 +219,9 @@ public class ActivityService {
             }
             var activityCreator = oActivityCreator.get();
 
-            volunteer.getActivities().remove(activity);
-            activity.getRatings().add(new Rating(creator));
-            volunteer.getActivities().add(activity);
+//            volunteer.getActivities().remove(activity);
+//            activity.getRatings().add(new Rating(creator));
+//            volunteer.getActivities().add(activity);
 
             creator.getActivities().remove(activityCreator);
             activityCreator.getRatings().add(new Rating(volunteer));
@@ -266,6 +266,7 @@ public class ActivityService {
         }
         var activity = oActivity.get();
         activity.setStatus("pending");
+        activity.getRatings().clear();
         volunteer.getActivities().add(activity);
         repository.save(volunteer);
         String message = volunteer.getUsername() + " has applied for activity id: " + id;
@@ -317,7 +318,7 @@ public class ActivityService {
             orgInd.getActivities().add(activity);
 
             volunteer.getActivities().remove(activityVolunteer);
-            activityVolunteer.getRatings().add(new Rating(orgInd));
+//            activityVolunteer.getRatings().add(new Rating(orgInd));
             activityVolunteer.setStatus("in progress");
             volunteer.getActivities().add(activityVolunteer);
 
