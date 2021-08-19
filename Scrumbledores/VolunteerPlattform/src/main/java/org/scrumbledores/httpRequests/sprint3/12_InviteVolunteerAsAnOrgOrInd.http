@@ -1,10 +1,4 @@
 ###
-// get own activities - pick number2
-GET http://localhost:9000/activity/
-Authorization: Basic Organization1 organization
-
-
-###
 // invite volunteer2
 PUT http://localhost:9000/activity/---ACTIVITY2-ID---/invite/Volunteer2
 Authorization: Basic Organization1 organization

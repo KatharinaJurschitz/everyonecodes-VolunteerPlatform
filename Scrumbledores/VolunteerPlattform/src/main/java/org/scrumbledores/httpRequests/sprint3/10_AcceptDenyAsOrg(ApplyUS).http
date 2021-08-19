@@ -1,9 +1,9 @@
 ###
 // accept volunteer1 for activity 1
-PUT http://localhost:9000/activity/---ID-AUS-09---/Volunteer1/accept
+PUT http://localhost:9000/activity/4073991e-f65e-48f8-8723-0d8b55521e52/Volunteer1/accept
 Authorization:  Basic Organization1 organization
 
 ###
 // deny volunteer2 for activity 1 --- show MongoDB Volunteer2 and Volunteer1
-PUT http://localhost:9000/activity/---ID-AUS-09---/Volunteer2/deny
+PUT http://localhost:9000/activity/4073991e-f65e-48f8-8723-0d8b55521e52/Volunteer2/deny
 Authorization:  Basic Organization1 organization
