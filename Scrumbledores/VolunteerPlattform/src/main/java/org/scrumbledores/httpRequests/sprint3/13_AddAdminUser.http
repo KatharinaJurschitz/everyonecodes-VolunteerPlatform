@@ -1,0 +1,43 @@
+###
+// show first Admin in MongoDB and create another Admin
+POST http://localhost:9000/admin
+Authorization: Basic Admin secret
+Content-Type: application/json
+
+{
+  "username": "Admin2",
+  "password": "secret",
+  "fullname": "Admin2",
+  "email": "admin2@admin.com"
+}
+
+
+###
+// List Volunteers
+GET http://localhost:9000/admin/volunteers
+Authorization: Basic Admin secret
+
+###
+// List Organizations
+GET http://localhost:9000/admin/organizations
+Authorization: Basic Admin secret
+
+###
+// List Individuals
+GET http://localhost:9000/admin/individuals
+Authorization: Basic Admin secret
+
+###
+// Show Details Volunteer1
+GET http://localhost:9000/admin/details/Volunteer1
+Authorization: Basic Admin secret
+
+###
+// Show Details Organization1
+GET http://localhost:9000/admin/details/Organization1
+Authorization: Basic Admin secret
+
+###
+// Show Details Individual1
+GET http://localhost:9000/admin/details/Individual1
+Authorization: Basic Admin secret

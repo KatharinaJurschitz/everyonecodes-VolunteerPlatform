@@ -1,0 +1,25 @@
+###
+// get own activities - pick number2
+GET http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+
+
+###
+// invite volunteer2
+PUT http://localhost:9000/activity/---ACTIVITY2-ID---/invite/Volunteer2
+Authorization: Basic Organization1 organization
+
+###
+// invite volunteer3 --- show Notification in DB if needed
+PUT http://localhost:9000/activity/---ACTIVITY2-ID---/invite/Volunteer3
+Authorization: Basic Organization1 organization
+
+###
+// accept invitation
+PUT http://localhost:9000/activity/---ACTIVITY2-ID---/accept
+Authorization: Basic Volunteer2 volunteer
+
+###
+// deny invitation - see MongoDB
+PUT http://localhost:9000/activity/---ACTIVITY2-ID---/deny
+Authorization: Basic Volunteer3 volunteer

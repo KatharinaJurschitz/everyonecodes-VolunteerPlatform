@@ -1,0 +1,31 @@
+###
+// get all own drafts
+GET http://localhost:9000/activity/drafts/
+Authorization: Basic Organization1 organization
+
+###
+// edit one drafted activity
+PUT http://localhost:9000/activity/drafts/---!!!ID-ÄNDERN!!!
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "Test Activity from Organization1",
+  "description" : "test change",
+  "startDate" : "2021-08-17T07:00"
+}
+
+###
+// post first drafted activity
+PUT http://localhost:9000/activity/drafts/---!!!ID-ÄNDERN!!!/post
+Authorization: Basic Organization1 organization
+
+###
+// get all own drafts
+GET http://localhost:9000/activity/drafts/
+Authorization: Basic Organization1 organization
+
+###
+// post other drafted activity
+PUT http://localhost:9000/activity/drafts/---!!!ID-ÄNDERN!!!/post
+Authorization: Basic Organization1 organization

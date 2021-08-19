@@ -1,0 +1,9 @@
+###
+// accept volunteer1 for activity 1
+PUT http://localhost:9000/activity/---ID-AUS-09---/Volunteer1/accept
+Authorization:  Basic Organization1 organization
+
+###
+// deny volunteer2 for activity 1 --- show MongoDB Volunteer2 and Volunteer1
+PUT http://localhost:9000/activity/---ID-AUS-09---/Volunteer2/deny
+Authorization:  Basic Organization1 organization

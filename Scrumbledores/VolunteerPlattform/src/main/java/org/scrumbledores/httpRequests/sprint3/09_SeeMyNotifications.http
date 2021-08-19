@@ -1,0 +1,4 @@
+###
+// List own Notifications (Organization)
+GET http://localhost:9000/notifications/
+Authorization: Basic Organization1 organization

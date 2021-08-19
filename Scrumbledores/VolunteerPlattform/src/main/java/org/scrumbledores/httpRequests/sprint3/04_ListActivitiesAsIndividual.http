@@ -1,0 +1,4 @@
+###
+// get own activities
+GET http://localhost:9000/activity/
+Authorization: Basic Individual1 individual

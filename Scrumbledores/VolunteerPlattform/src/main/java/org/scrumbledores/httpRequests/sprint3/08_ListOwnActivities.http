@@ -1,0 +1,4 @@
+###
+// List own activities
+GET http://localhost:9000/activity/volunteer/
+Authorization: Basic Volunteer1 volunteer

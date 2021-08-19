@@ -1,0 +1,10 @@
+###
+// see all Volunteers as Organization
+GET http://localhost:9000/search/volunteers
+Authorization: Basic Organization1 organization
+
+
+###
+// see all Volunteers as Individual
+GET http://localhost:9000/search/volunteers
+Authorization: Basic Individual1 individual

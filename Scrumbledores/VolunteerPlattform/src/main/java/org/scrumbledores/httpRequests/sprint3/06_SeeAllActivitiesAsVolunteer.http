@@ -1,0 +1,5 @@
+###
+// see all Activities (in progress) As Volunteer
+GET http://localhost:9000/search/activities
+Authorization: Basic Volunteer1 volunteer
+

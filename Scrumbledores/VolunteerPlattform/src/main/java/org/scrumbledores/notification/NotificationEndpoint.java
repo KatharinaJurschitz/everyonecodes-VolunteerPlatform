@@ -20,11 +20,4 @@ public class NotificationEndpoint {
         return service.listAllNotifications(principal);
     }
 
-    @PostMapping
-    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
-    void testnotification() {
-        service.sendNotification("Test", "Individual1", "Testmessage");
-    }
-
- //(.)(.)
 }
