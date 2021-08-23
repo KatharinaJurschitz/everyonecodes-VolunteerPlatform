@@ -29,7 +29,8 @@ public class ActivityService {
 
         var activity = activityDTOToActivity(activityDTO);
 
-        activity.setStatus("draft");
+//        activity.setStatus("draft"); // PRODUCTION STATUS
+        activity.setStatus("in progress"); // TEST STATUS
         activity.setCreatorName(principal.getName());
         activity.setCreatorRole(user.getRole().stream().findFirst().get());
         activity.setCreatorRating(user.getRating());

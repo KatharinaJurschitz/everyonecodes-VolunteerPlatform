@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "title" : "Test Activity from Individual1",
-  "description" : "test activity",
+  "description" : "cook activity",
   "startDate" : "2021-08-16T17:00"
 }
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 
 {
   "title" : "Test Activity from Organization1",
-  "description" : "test activity",
+  "description" : "cooking activity",
   "startDate" : "2021-08-16T17:00",
   "endDate" : "2021-08-20T17:00"
 }
@@ -30,11 +30,85 @@ Authorization: Basic Organization1 organization
 Content-Type: application/json
 
 {
+  "title" : "dateActivity",
+  "description" : "cleaning activity",
+  "recommendedSkills" : "cleaning; cooking",
+  "categories" : [1, 2],
+  "startDate" : "2021-08-20T17:00"
+}
+
+###
+// create new activity4 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
   "title" : "Test Activity2 from Organization1",
   "description" : "test activity",
-  "recommendedSkills" : "Quidditch; Transfiguration",
+  "recommendedSkills" : "clEan",
   "categories" : [1, 2],
   "startDate" : "2021-08-16T17:00",
   "endDate" : "2021-08-20T17:00"
 }
 
+
+###
+// create new activity5 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "cook",
+  "description" : "cook",
+  "recommendedSkills" : "cook",
+  "categories" : [1, 2],
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-08-20T17:00"
+}
+
+###
+// create new activity6 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "cooking",
+  "description" : "Cooking",
+  "recommendedSkills" : "cooking",
+  "categories" : [1, 2],
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-08-20T17:00"
+}
+
+
+###
+// create new activity6 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "test",
+  "description" : "test",
+  "recommendedSkills" : "cook",
+  "categories" : [1, 2],
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-08-20T17:00"
+}
+
+###
+// create new activity as Individual1
+POST http://localhost:9000/activity/
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+{
+  "title" : "activity individual1 with category",
+  "description" : "cook activity",
+  "recommendedSkills" : "clean",
+  "categories" : [3],
+  "startDate" : "2021-08-21T15:00"
+}

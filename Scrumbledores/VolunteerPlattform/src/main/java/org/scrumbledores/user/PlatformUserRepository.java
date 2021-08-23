@@ -1,6 +1,8 @@
 package org.scrumbledores.user;
 
 import org.scrumbledores.user.dataclass.PlatformUser;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
@@ -14,5 +16,5 @@ public interface PlatformUserRepository extends MongoRepository<PlatformUser, St
 
     List<PlatformUser> findOneByActivitiesActivityId(String activityId);
 
-
+    List<PlatformUser> findAllBy(TextCriteria criteria, Sort sort);
 }

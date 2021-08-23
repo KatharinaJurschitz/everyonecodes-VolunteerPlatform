@@ -115,7 +115,7 @@ public class UserService {
         return platformUserToUserPublicDTO(user);
     }
 
-    private UserPublicDTO platformUserToUserPublicDTO(PlatformUser user) {
+    public UserPublicDTO platformUserToUserPublicDTO(PlatformUser user) {
 
         int age;
 

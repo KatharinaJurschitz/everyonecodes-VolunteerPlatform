@@ -23,13 +23,14 @@ public class Activity {
     private String title;
     @NotEmpty
     private String description;
-    private String recommendedSkills;
+    private String recommendedSkills = "";
     private List<String> categories = new ArrayList<>();
     @NotEmpty
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String status; // drafts, in progress, completed
     private List<Rating> ratings = new ArrayList<>();
+
 
     public Activity(String title, String description, LocalDateTime startDate) {
         this.title = title;

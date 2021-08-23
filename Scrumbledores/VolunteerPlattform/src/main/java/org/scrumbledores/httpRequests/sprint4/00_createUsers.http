@@ -1,0 +1,107 @@
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer1",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer1@hogwarts.com"
+}
+
+###
+// regular user - volunteer2
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer2",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer2@hogwarts.com",
+  "skills": "cooking"
+}
+
+###
+// regular user - volunteer3
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer3",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer3@hogwarts.com",
+  "skills": "cooking; flying"
+}
+
+###
+// regular user - organization
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Organization1",
+  "password": "organization",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "organization1@hogwarts.com"
+}
+
+###
+// regular user - organization2
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Organization2",
+  "password": "organization",
+  "role": ["ROLE_ORGANIZATION"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "organization2@hogwarts.com"
+}
+
+###
+// regular user - individual1
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Individual1",
+  "password": "individual",
+  "role": ["ROLE_INDIVIDUAL"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "individual1@hogwarts.com"
+}
+
+###
+// regular user - volunteer4
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "Volunteer4",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "volunteer4@hogwarts.com",
+  "skills": "cook, fly, fishing"
+}
