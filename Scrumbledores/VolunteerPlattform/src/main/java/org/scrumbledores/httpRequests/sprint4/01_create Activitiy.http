@@ -1,0 +1,40 @@
+###
+// create new activity as Individual1
+POST http://localhost:9000/activity/
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+{
+  "title" : "Test Activity from Individual1",
+  "description" : "test activity",
+  "startDate" : "2021-08-16T17:00"
+}
+
+###
+// create new activity2 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "Test Activity from Organization1",
+  "description" : "test activity",
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-08-20T17:00"
+}
+
+###
+// create new activity3 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "Test Activity2 from Organization1",
+  "description" : "test activity",
+  "recommendedSkills" : "Quidditch; Transfiguration",
+  "categories" : [1, 2],
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-08-20T17:00"
+}
+
