@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.scrumbledores.user.dataclass.Activity;
 import org.scrumbledores.user.dataclass.ActivityDTO;
 import org.scrumbledores.user.dataclass.ActivityVolunteerDTO;
+import org.scrumbledores.user.dataclass.Feedback;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,17 +79,16 @@ public class ActivityEndpoint {
         return service.acceptDenyApplication(principal, id, username, acceptdeny);
     }
 
-//    @PutMapping("/{id}/rating/{volunteerID}")
-//    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
-//    String completeActivity(Principal principal, @PathVariable String id, @PathVariable String volunteerID) {
-//        return service.rateVolunteer(principal, id, volunteerID);
-//    }
-//
-//    @PutMapping("/{id}/complete")
-//    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
-//    String completeActivity(Principal principal, @PathVariable String id) {
-//        return service.completeActivity(principal, id);
-//    }
+    @PutMapping("/{id}/complete")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    String completeActivityCreator(Principal principal, @PathVariable String id, @Valid @RequestBody List<Feedback> feedbacks) {
+        return service.completeActivityCreator(principal, id, feedbacks);
+    }
 
+    @PutMapping("/{id}/close")
+    @Secured({"ROLE_VOLUNTEER"})
+    String completeActivityVolunteer(Principal principal, @PathVariable String id, @Valid @RequestBody Feedback feedback) {
+        return service.completeActivityVolunteer(principal, id, feedback);
+    }
 
 }

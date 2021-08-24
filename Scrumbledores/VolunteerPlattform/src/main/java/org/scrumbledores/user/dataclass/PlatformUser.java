@@ -44,8 +44,9 @@ public class PlatformUser {
     private String skills;
     @Min(0)
     @Max(5)
-//    private double rating = 0; for testing
-    private double rating = 2.0;
+    private double rating = 0;
+//    private double rating = 2.0; // for testing
+    private List<Integer> ratings = new ArrayList<>();
     private List<Activity> activities = new ArrayList<>();
     private List<String> notifications = new ArrayList<>();
     @TextScore

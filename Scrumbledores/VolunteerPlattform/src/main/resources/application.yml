@@ -40,6 +40,7 @@ apptree:
         *My activities
           Accept or deny invites
           Apply for activity
+          Complete activity and rate creator
     - |       # ROLE_ORGANIZATION
         *Profile
           Edit profile
@@ -58,6 +59,7 @@ apptree:
           Post Own Draft
           Send Invite to Volunteer
           Accept or deny applications
+          Complete activity and rate participants
     - |       # ROLE_INDIVIDUAL
         *Profile
           Edit profile
@@ -76,5 +78,6 @@ apptree:
           Post Own Draft
           Send Invite to Volunteer
           Accept or deny applications
+          Complete activity and rate participants
 scheduling:
   deleteresettoken: 0 0 0 ? * *

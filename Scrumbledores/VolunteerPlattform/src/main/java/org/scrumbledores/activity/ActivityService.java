@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import org.scrumbledores.notification.NotificationService;
 import org.scrumbledores.user.PlatformUserRepository;
 import org.scrumbledores.user.UserService;
-import org.scrumbledores.user.dataclass.Activity;
-import org.scrumbledores.user.dataclass.ActivityDTO;
-import org.scrumbledores.user.dataclass.ActivityVolunteerDTO;
-import org.scrumbledores.user.dataclass.Rating;
+import org.scrumbledores.user.dataclass.*;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -209,6 +207,7 @@ public class ActivityService {
 
             volunteer.getActivities().remove(activity);
             activity.setStatus("in progress");
+            activity.getRatings().add(new Rating(volunteer));
             volunteer.getActivities().add(activity);
             repository.save(volunteer);
 
@@ -368,5 +367,136 @@ public class ActivityService {
                 ratings.stream().map(Rating::getRatingFromCreator).findFirst().orElse(0),
                 ratings.stream().filter(x -> x.getFeedbackFromCreator() != null).map(Rating::getFeedbackFromCreator).findFirst().orElse("")
         );
+    }
+
+
+    public String completeActivityCreator(Principal principal, String id, List<Feedback> feedbacks) {
+        var creator = userService.findUser(principal);
+        var oCreatorActivity = creator.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("in progress"))
+                .findFirst();
+        if (oCreatorActivity.isEmpty()) {
+            return "Activity not found or not 'in progress'.";
+        }
+        var creatorActivity = oCreatorActivity.get();
+
+
+        var ratings = creatorActivity.getRatings();
+
+        if (ratings.size() != feedbacks.size()) {
+            return "Please rate all participants";
+        }
+
+        var participantsRating = ratings.stream()
+                .sorted(Comparator.comparing(x -> x.getParticipant().getUsername()))
+                .collect(Collectors.toList());
+        var sortedFeedback = feedbacks.stream()
+                .sorted(Comparator.comparing(Feedback::getUsername))
+                .collect(Collectors.toList());
+        for (int i = 0; i < participantsRating.size(); i++) {
+            if (!participantsRating.get(i).getParticipant().getUsername().equals(sortedFeedback.get(i).getUsername())) {
+                return "Not the same username(s)";
+            }
+        }
+        for (int i = 0; i < participantsRating.size(); i++) {
+            participantsRating.get(i).setRatingFromCreator(sortedFeedback.get(i).getRating());
+            var volunteer = repository.findOneByUsername(sortedFeedback.get(i).getUsername()).get();
+            var volunteerActivity = volunteer.getActivities().stream()
+                    .filter(x -> x.getActivityId().equals(id))
+                    .findFirst()
+                    .get();
+
+            volunteer.getActivities().remove(volunteerActivity);
+
+            volunteerActivity.getRatings().get(0).setRatingFromCreator(sortedFeedback.get(i).getRating());
+
+            if (!sortedFeedback.get(i).getFeedback().isEmpty()) {
+                participantsRating.get(i).setFeedbackFromCreator(sortedFeedback.get(i).getFeedback());
+                volunteerActivity.getRatings().get(0).setFeedbackFromCreator(sortedFeedback.get(i).getFeedback());
+            }
+
+            volunteer.getActivities().add(volunteerActivity);
+
+            if (volunteer.getRating() == 0) {
+                volunteer.setRating(sortedFeedback.get(i).getRating());
+                volunteer.getRatings().add(sortedFeedback.get(i).getRating());
+            } else {
+                volunteer.getRatings().add(sortedFeedback.get(i).getRating());
+                var integer = volunteer.getRatings().stream().reduce(0, Integer::sum);
+                volunteer.setRating((double)integer / (double) volunteer.getRatings().size());
+            }
+            volunteerActivity.setStatus("To be rated");
+            repository.save(volunteer);
+            String message = "Activity Id " + id + " was closed by " + creator.getUsername() + ". You have been rated." +
+                    "Please rate " + creator.getUsername() + " to close this activity completely.";
+            notificationService.sendNotification(creator.getUsername(), volunteer.getUsername(), message);
+        }
+        creatorActivity.setStatus("completed");
+        repository.save(creator);
+        return "Activity Id: " + id + " was completed.";
+    }
+
+    public String completeActivityVolunteer(Principal principal, String id, Feedback feedback) {
+        var volunteer = userService.findUser(principal);
+        var oVolunteerActivity = volunteer.getActivities()
+                .stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("To be rated"))
+                .findFirst();
+        if (oVolunteerActivity.isEmpty()) {
+            return "Activity not found or not 'to be rated'.";
+        }
+        var volunteerActivity = oVolunteerActivity.get();
+        var creator = repository.findOneByUsername(volunteerActivity.getCreatorName()).get();
+        var oCreatorActivity = creator.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("completed"))
+                .findFirst();
+        if (oCreatorActivity.isEmpty()) {
+            return "Creator Activity not found or not 'completed'.";
+        }
+        var creatorActivity = oCreatorActivity.get();
+        var oVolunteerRatingFromCreator = creatorActivity.getRatings()
+                .stream()
+                .filter(x -> x.getParticipant().getUsername().equals(volunteer.getUsername()))
+                .findFirst();
+        if (oVolunteerRatingFromCreator.isEmpty()) {
+            return "Rating with Volunteer Name not found.";
+        }
+        var volunteerRatingFromCreator = oVolunteerRatingFromCreator.get();
+        var volunteerRatingFromVolunteer = volunteerActivity.getRatings().get(0);
+
+        volunteer.getActivities().remove(volunteerActivity);
+        creator.getActivities().remove(creatorActivity);
+
+        volunteerRatingFromCreator.setRatingFromParticipant(feedback.getRating());
+        volunteerRatingFromVolunteer.setRatingFromParticipant(feedback.getRating());
+
+        if (!feedback.getFeedback().isEmpty()) {
+            volunteerRatingFromCreator.setFeedbackFromCreator(feedback.getFeedback());
+            volunteerRatingFromVolunteer.setFeedbackFromParticipant(feedback.getFeedback());
+        }
+
+        if (creator.getRating() == 0) {
+            creator.setRating(feedback.getRating());
+            creator.getRatings().add(feedback.getRating());
+        } else {
+            creator.getRatings().add(feedback.getRating());
+            var integer = creator.getRatings().stream().reduce(0, Integer::sum);
+            creator.setRating((double)integer / (double) creator.getRatings().size());
+        }
+
+        volunteerActivity.setStatus("completed");
+        volunteer.getActivities().add(volunteerActivity);
+        creator.getActivities().add(creatorActivity);
+
+        repository.save(volunteer);
+        repository.save(creator);
+
+        String message = "Activity Id " + id + " was closed by " + volunteer.getUsername() + ". You have been rated";
+        notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), message);
+
+        return "Activity ID " + id + " was completed.";
     }
 }
