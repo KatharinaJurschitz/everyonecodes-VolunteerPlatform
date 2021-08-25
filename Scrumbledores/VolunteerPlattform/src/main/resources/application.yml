@@ -60,6 +60,8 @@ apptree:
           Send Invite to Volunteer
           Accept or deny applications
           Complete activity and rate participants
+          Delete Drafts and Activities with no Participants
+          Change posted Activities with no participants to Draft Status
     - |       # ROLE_INDIVIDUAL
         *Profile
           Edit profile
@@ -79,5 +81,7 @@ apptree:
           Send Invite to Volunteer
           Accept or deny applications
           Complete activity and rate participants
+          Delete Drafts and Activities with no Participants
+          Change posted Activities with no participants to Draft Status
 scheduling:
   deleteresettoken: 0 0 0 ? * *

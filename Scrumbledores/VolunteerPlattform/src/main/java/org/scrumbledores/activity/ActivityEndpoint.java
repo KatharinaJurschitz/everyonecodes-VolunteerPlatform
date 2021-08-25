@@ -91,4 +91,15 @@ public class ActivityEndpoint {
         return service.completeActivityVolunteer(principal, id, feedback);
     }
 
+    @DeleteMapping("/{id}")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    String deleteActivity(Principal principal, @PathVariable String id) {
+        return service.deleteActivity(principal, id);
+    }
+
+    @PutMapping("/{id}/changeToDraft")
+    @Secured({"ROLE_INDIVIDUAL", "ROLE_ORGANIZATION"})
+    String changeToDraft(Principal principal, @PathVariable String id) {
+        return service.changeToDraft(principal, id);
+    }
 }

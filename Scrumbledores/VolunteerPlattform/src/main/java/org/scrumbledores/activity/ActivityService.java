@@ -499,4 +499,40 @@ public class ActivityService {
 
         return "Activity ID " + id + " was completed.";
     }
+
+    public String deleteActivity(Principal principal, String id) {
+        var creator = userService.findUser(principal);
+
+        var oCreatorActivity = creator.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getRatings().isEmpty())
+                .findFirst();
+        if (oCreatorActivity.isEmpty()) {
+            return "Creator Activity not found or already connected to Participants";
+        }
+        var creatorActivity = oCreatorActivity.get();
+        creator.getActivities().remove(creatorActivity);
+        repository.save(creator);
+
+        return "Activity " + id + " was successfully deleted";
+    }
+
+    public String changeToDraft(Principal principal, String id) {
+        var creator = userService.findUser(principal);
+
+        var oCreatorActivity = creator.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getRatings().isEmpty())
+                .findFirst();
+        if (oCreatorActivity.isEmpty()) {
+            return "Creator Activity not found or already connected to Participants";
+        }
+        var creatorActivity = oCreatorActivity.get();
+        creator.getActivities().remove(creatorActivity);
+        creatorActivity.setStatus("draft");
+        creator.getActivities().add(creatorActivity);
+        repository.save(creator);
+
+        return "Activity " + id + " was successfully changed to Draft Status";
+    }
 }
