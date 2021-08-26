@@ -49,12 +49,6 @@ public class SearchEndpoint {
                                                   @RequestParam(defaultValue = "", required = false) String filterSkills,
                                                   @RequestParam(defaultValue = "", required = false) String filterCreator,
                                                   @RequestParam(defaultValue = "0", required = false) String filterRating) {
-        System.out.println(searchCriteria);
-        System.out.println(filterDate);
-        System.out.println(filterCategory);
-        System.out.println(filterSkills);
-        System.out.println(filterCreator);
-        System.out.println(filterRating);
         var result = service.findAllActivitiesFiltered(searchCriteria, filterDate, filterCategory, filterSkills, filterCreator, filterRating);
         if (result.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nothing was found");

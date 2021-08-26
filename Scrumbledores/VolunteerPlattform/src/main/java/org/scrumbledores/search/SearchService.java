@@ -69,7 +69,6 @@ public class SearchService {
     }
 
 
-
     public List<UserPublicDTO> findAllVolunteersFiltered(String searchCriteria, String filterSkills, String filterRating) {
         Sort sort = Sort.by("score");
         TextCriteria criteria = TextCriteria.forDefaultLanguage().caseSensitive(false).matching(searchCriteria);
@@ -95,22 +94,29 @@ public class SearchService {
         var result = activityDBRepository.findAllBy(criteria, sort);
         result.forEach(System.out::println);
 
-        var streamResult =  result.stream()
+        var streamResult = result.stream()
                 .filter(x -> !x.getCreatorRole().equals("ROLE_VOLUNTEER"))
                 .filter(x -> x.getStartDate().isAfter(LocalDate.parse(filterDate).atStartOfDay()))
-//                .filter(x -> x.getCategories().stream().allMatch(a -> a.contains(filterCategory)))
+                .filter(x -> x.getCategories().stream().allMatch(a -> a.contains(filterCategory)))
                 .filter(x -> x.getRecommendedSkills().contains(filterSkills))
                 .filter(x -> x.getCreatorName().contains(filterCreator))
                 .filter(x -> x.getCreatorRating() >= Double.parseDouble(filterRating))
                 .collect(Collectors.toList());
 
+        streamResult.forEach(System.out::println);
+
         List<ActivityDB> categories = new ArrayList<>();
-        for (ActivityDB activityDB : streamResult) {
-            for (String category : activityDB.getCategories()) {
-                if (category.contains(filterCategory)) {
-                    categories.add(activityDB);
+        if (!filterCategory.isEmpty()) {
+            for (ActivityDB activityDB : streamResult) {
+                for (String category : activityDB.getCategories()) {
+                    if (category.contains(filterCategory)) {
+                        categories.add(activityDB);
+                    }
                 }
             }
+        }
+        else {
+            return streamResult;
         }
         return categories;
     }

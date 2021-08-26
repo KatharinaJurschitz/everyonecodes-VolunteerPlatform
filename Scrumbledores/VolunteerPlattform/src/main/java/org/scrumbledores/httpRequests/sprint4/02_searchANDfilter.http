@@ -1,0 +1,31 @@
+###
+// search for cook as Volunteer
+GET http://localhost:9000/search/activities/cook
+Authorization: Basic Volunteer1 volunteer
+
+###
+// search for cooking as Volunteer
+GET http://localhost:9000/search/activities/clean
+Authorization: Basic Volunteer1 volunteer
+
+###
+// search for Quidditch as Volunteer
+GET http://localhost:9000/search/activities/Quidditch
+Authorization: Basic Volunteer1 volunteer
+
+###
+// search for cook as Volunteer
+GET http://localhost:9000/search/activities/cook?filterDate=2021-08-01&filterSkills=baking
+Authorization: Basic Volunteer1 volunteer
+
+
+###
+// search for cook as Organization
+GET http://localhost:9000/search/volunteers/cook
+Authorization: Basic Organization1 organization
+
+
+### (show filter after activity completion)
+// search for cook as Organization
+GET http://localhost:9000/search/volunteers/cook?filterSkills=cooking
+Authorization: Basic Organization1 organization

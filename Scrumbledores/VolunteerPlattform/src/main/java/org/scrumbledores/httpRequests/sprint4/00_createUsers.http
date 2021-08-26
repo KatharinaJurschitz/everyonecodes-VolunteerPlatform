@@ -10,7 +10,8 @@ Content-Type: application/json
   "fullname": "Albus Dumbledore",
   "dateOfBirth": "1980-10-10",
   "address": "Hogwarts",
-  "email": "volunteer1@hogwarts.com"
+  "email": "volunteer1@hogwarts.com",
+  "skills": "cook"
 }
 
 ###
@@ -42,8 +43,9 @@ Content-Type: application/json
   "dateOfBirth": "1980-10-10",
   "address": "Hogwarts",
   "email": "volunteer3@hogwarts.com",
-  "skills": "cooking; flying"
+  "skills": "cleaning"
 }
+
 
 ###
 // regular user - organization
@@ -60,20 +62,6 @@ Content-Type: application/json
   "email": "organization1@hogwarts.com"
 }
 
-###
-// regular user - organization2
-POST http://localhost:9000/users
-Content-Type: application/json
-
-{
-  "username": "Organization2",
-  "password": "organization",
-  "role": ["ROLE_ORGANIZATION"],
-  "fullname": "Albus Dumbledore",
-  "dateOfBirth": "1980-10-10",
-  "address": "Hogwarts",
-  "email": "organization2@hogwarts.com"
-}
 
 ###
 // regular user - individual1
@@ -90,18 +78,3 @@ Content-Type: application/json
   "email": "individual1@hogwarts.com"
 }
 
-###
-// regular user - volunteer4
-POST http://localhost:9000/users
-Content-Type: application/json
-
-{
-  "username": "Volunteer4",
-  "password": "volunteer",
-  "role": ["ROLE_VOLUNTEER"],
-  "fullname": "Albus Dumbledore",
-  "dateOfBirth": "1980-10-10",
-  "address": "Hogwarts",
-  "email": "volunteer4@hogwarts.com",
-  "skills": "cook, fly, fishing"
-}

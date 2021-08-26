@@ -1,0 +1,35 @@
+###
+// invite volunteer1
+PUT http://localhost:9000/activity/---ID---/invite/Volunteer1
+Authorization: Basic Organization1 organization
+
+###
+// accept invitation
+PUT http://localhost:9000/activity/---ID---/accept
+Authorization: Basic Volunteer1 volunteer
+
+###
+// complete activity as creator
+PUT http://localhost:9000/activity/---ID---/complete
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+[
+  {
+    "username" : "Volunteer1",
+    "rating" : 5,
+    "feedback" : "awesome!"
+  }
+]
+
+###
+// complete activity as participant
+PUT http://localhost:9000/activity/---ID---/close
+Authorization: Basic Volunteer1 volunteer
+Content-Type: application/json
+
+{
+  "username" : "Organization1",
+  "rating" : 3,
+  "feedback" : "quiet ok"
+}
