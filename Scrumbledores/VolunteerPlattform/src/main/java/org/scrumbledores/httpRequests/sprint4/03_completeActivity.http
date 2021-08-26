@@ -1,7 +1,7 @@
 ###
 // invite volunteer1
 PUT http://localhost:9000/activity/---ID---/invite/Volunteer1
-Authorization: Basic Organization1 organization
+Authorization: Basic Individual1 individual
 
 ###
 // accept invitation
@@ -17,7 +17,7 @@ Content-Type: application/json
 [
   {
     "username" : "Volunteer1",
-    "rating" : 5,
+    "rating" : 4,
     "feedback" : "awesome!"
   }
 ]
@@ -33,3 +33,13 @@ Content-Type: application/json
   "rating" : 3,
   "feedback" : "quiet ok"
 }
+
+### (show filter after activity completion)
+// search for cook as Organization
+GET http://localhost:9000/search/volunteers/cook?filterSkills=cooking&filterRating=3
+Authorization: Basic Organization1 organization
+
+### (show filter after activity completion)
+// search for cook as Organization no result
+GET http://localhost:9000/search/volunteers/cook?filterSkills=cooking&filterRating=5
+Authorization: Basic Organization1 organization

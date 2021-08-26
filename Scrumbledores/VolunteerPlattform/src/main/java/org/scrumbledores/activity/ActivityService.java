@@ -164,6 +164,7 @@ public class ActivityService {
         }
         var activity = oActivity.get();
         activity.setStatus("pending");
+        activity.getRatings().clear();
         volunteer.getActivities().add(activity);
         repository.save(volunteer);
         String message = "Hello " + volunteer.getUsername() + ", you are invited to help with this Activity: " + id + ". Please accept or deny. Thank you.";
