@@ -1,16 +1,16 @@
 ###
 // invite volunteer1
-PUT http://localhost:9000/activity/---ID---/invite/Volunteer1
+PUT http://localhost:9000/activity/---ID-Ind---/invite/Volunteer1
 Authorization: Basic Individual1 individual
 
 ###
 // accept invitation
-PUT http://localhost:9000/activity/---ID---/accept
+PUT http://localhost:9000/activity/---ID-Ind---/accept
 Authorization: Basic Volunteer1 volunteer
 
 ###
 // complete activity as creator
-PUT http://localhost:9000/activity/---ID---/complete
+PUT http://localhost:9000/activity/---ID-Ind---/complete
 Authorization: Basic Individual1 individual
 Content-Type: application/json
 
@@ -24,22 +24,22 @@ Content-Type: application/json
 
 ###
 // complete activity as participant
-PUT http://localhost:9000/activity/---ID---/close
+PUT http://localhost:9000/activity/---ID-Ind---/close
 Authorization: Basic Volunteer1 volunteer
 Content-Type: application/json
 
 {
-  "username" : "Organization1",
+  "username" : "Individual1",
   "rating" : 3,
   "feedback" : "quiet ok"
 }
 
 ### (show filter after activity completion)
-// search for cook as Organization
-GET http://localhost:9000/search/volunteers/cook?filterSkills=cooking&filterRating=3
-Authorization: Basic Organization1 organization
+// search for cook as Individual
+GET http://localhost:9000/search/volunteers/cook?filterRating=3
+Authorization: Basic Individual1 individual
 
 ### (show filter after activity completion)
 // search for cook as Organization no result
-GET http://localhost:9000/search/volunteers/cook?filterSkills=cooking&filterRating=5
+GET http://localhost:9000/search/volunteers/cook?filterRating=5
 Authorization: Basic Organization1 organization
