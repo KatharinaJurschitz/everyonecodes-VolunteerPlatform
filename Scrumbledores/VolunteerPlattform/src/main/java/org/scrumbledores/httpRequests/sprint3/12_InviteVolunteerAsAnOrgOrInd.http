@@ -1,19 +1,19 @@
 ###
 // invite volunteer2
-PUT http://localhost:9000/activity/---ACTIVITY2-ID---/invite/Volunteer2
+PUT http://localhost:9000/activity/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/invite/Volunteer2
 Authorization: Basic Organization1 organization
 
 ###
 // invite volunteer3 --- show Notification in DB if needed
-PUT http://localhost:9000/activity/---ACTIVITY2-ID---/invite/Volunteer3
+PUT http://localhost:9000/activity/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/invite/Volunteer3
 Authorization: Basic Organization1 organization
 
 ###
 // accept invitation
-PUT http://localhost:9000/activity/---ACTIVITY2-ID---/accept
+PUT http://localhost:9000/activity/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/accept
 Authorization: Basic Volunteer2 volunteer
 
 ###
 // deny invitation - see MongoDB
-PUT http://localhost:9000/activity/---ACTIVITY2-ID---/deny
+PUT http://localhost:9000/activity/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/deny
 Authorization: Basic Volunteer3 volunteer

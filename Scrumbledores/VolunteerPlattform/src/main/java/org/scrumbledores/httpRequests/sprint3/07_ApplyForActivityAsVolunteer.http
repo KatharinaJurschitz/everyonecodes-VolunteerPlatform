@@ -1,10 +1,10 @@
 ###
 // apply for activity
-PUT http://localhost:9000/activity/2ac73321-a4b0-4ef5-9185-085dbdb1664f/apply/
+PUT http://localhost:9000/activity/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/apply/
 Authorization:  Basic Volunteer1 volunteer
 
 ###
 // apply for activity
-PUT http://localhost:9000/activity/280cf6f9-90cf-4fd0-a7d0-05044ffc3e4e/apply/
-Authorization:  Basic Volunteer3 volunteer
+PUT http://localhost:9000/activity/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/apply/
+Authorization:  Basic Volunteer2 volunteer
 

@@ -5,7 +5,7 @@ Authorization: Basic Organization1 organization
 
 ###
 // edit one drafted activity
-PUT http://localhost:9000/activity/drafts/---!!!ID-ÄNDERN!!!
+PUT http://localhost:9000/activity/drafts/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a
 Authorization: Basic Organization1 organization
 Content-Type: application/json
 
@@ -17,7 +17,7 @@ Content-Type: application/json
 
 ###
 // post first drafted activity
-PUT http://localhost:9000/activity/drafts/---!!!ID-ÄNDERN!!!/post
+PUT http://localhost:9000/activity/drafts/f4bb559e-230b-41ed-aeb8-ce0fa5ab980a/post
 Authorization: Basic Organization1 organization
 
 ###
@@ -27,5 +27,5 @@ Authorization: Basic Organization1 organization
 
 ###
 // post other drafted activity
-PUT http://localhost:9000/activity/drafts/---!!!ID-ÄNDERN!!!/post
+PUT http://localhost:9000/activity/drafts/9a337b1d-50d3-462f-bd1e-25da3a7434e4/post
 Authorization: Basic Organization1 organization

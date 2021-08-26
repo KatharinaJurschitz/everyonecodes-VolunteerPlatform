@@ -48,20 +48,20 @@ apptree:
 
         *Search
           Search for volunteers
-          Find all Volunteers
+          Find all volunteers
           Search and filter volunteers based on a text/criteria search
 
         *My activities
           Create activity
-          Get Own Activities
-          Get Own Drafts
-          Edit Own Draft
-          Post Own Draft
-          Send Invite to Volunteer
+          Get own activities
+          Get own drafts
+          Edit own draft
+          Post own draft
+          Send invite to volunteer
           Accept or deny applications
           Complete activity and rate participants
-          Delete Drafts and Activities with no Participants
-          Change posted Activities with no participants to Draft Status
+          Delete drafts and activities with no participants
+          Change posted activities with no participants to draft status
     - |       # ROLE_INDIVIDUAL
         *Profile
           Edit profile
@@ -69,19 +69,19 @@ apptree:
 
         *Search
           Search for volunteers
-          Find all Volunteers
-          Find Volunteers based on a text/criteria search
+          Find all volunteers
+          Find volunteers based on a text/criteria search
 
         *My activities
           Create activity
-          Get Own Activities
-          Get Own Drafts
-          Edit Own Draft
-          Post Own Draft
-          Send Invite to Volunteer
+          Get own activities
+          Get own drafts
+          Edit own draft
+          Post own draft
+          Send invite to volunteer
           Accept or deny applications
           Complete activity and rate participants
-          Delete Drafts and Activities with no Participants
-          Change posted Activities with no participants to Draft Status
+          Delete drafts and activities with no participants
+          Change posted activities with no participants to draft status
 scheduling:
   deleteresettoken: 0 0 0 ? * *
