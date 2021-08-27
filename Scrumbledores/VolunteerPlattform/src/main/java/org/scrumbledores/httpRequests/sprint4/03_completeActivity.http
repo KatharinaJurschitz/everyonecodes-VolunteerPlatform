@@ -1,16 +1,16 @@
 ###
 // invite volunteer1
-PUT http://localhost:9000/activity/---ID-Ind---/invite/Volunteer1
+PUT http://localhost:9000/activity/2c27d9c2-0137-45ee-8ea1-d279c1447f4c/invite/Volunteer1
 Authorization: Basic Individual1 individual
 
 ###
 // accept invitation
-PUT http://localhost:9000/activity/---ID-Ind---/accept
+PUT http://localhost:9000/activity/2c27d9c2-0137-45ee-8ea1-d279c1447f4c/accept
 Authorization: Basic Volunteer1 volunteer
 
 ###
 // complete activity as creator
-PUT http://localhost:9000/activity/---ID-Ind---/complete
+PUT http://localhost:9000/activity/2c27d9c2-0137-45ee-8ea1-d279c1447f4c/complete
 Authorization: Basic Individual1 individual
 Content-Type: application/json
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ###
 // complete activity as participant
-PUT http://localhost:9000/activity/---ID-Ind---/close
+PUT http://localhost:9000/activity/2c27d9c2-0137-45ee-8ea1-d279c1447f4c/close
 Authorization: Basic Volunteer1 volunteer
 Content-Type: application/json
 

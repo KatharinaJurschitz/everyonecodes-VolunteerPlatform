@@ -1,25 +1,25 @@
 ###
 // change to draft
-PUT http://localhost:9000/activity/---ID-Org---/changeToDraft
+PUT http://localhost:9000/activity/9fcadd7e-9c66-4635-b67c-07cfada434fb/changeToDraft
 Authorization: Basic Organization1 organization
 
 ###
 // delete draft (or in progess without participants)
-DELETE http://localhost:9000/activity/---ID-Org---
+DELETE http://localhost:9000/activity/e25361b5-d4cd-498b-866d-c65d20a7a858
 Authorization: Basic Organization1 organization
 
 ###
 // invite volunteer2
-PUT http://localhost:9000/activity/---ID-Org---/invite/Volunteer2
-Authorization: Basic Organization1 organization#
+PUT http://localhost:9000/activity/9fcadd7e-9c66-4635-b67c-07cfada434fb/invite/Volunteer2
+Authorization: Basic Organization1 organization
 
 ###
 // accept invitation
-PUT http://localhost:9000/activity/---ID-Org---/accept
+PUT http://localhost:9000/activity/9fcadd7e-9c66-4635-b67c-07cfada434fb/accept
 Authorization: Basic Volunteer2 volunteer
 
 
 ###
 // delete in progress not possible
-DELETE http://localhost:9000/activity/---ID-Org---
+DELETE http://localhost:9000/activity/9fcadd7e-9c66-4635-b67c-07cfada434fb
 Authorization: Basic Organization1 organization
