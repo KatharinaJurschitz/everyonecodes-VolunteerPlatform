@@ -86,3 +86,6 @@ apptree:
           Change posted activities with no participants to draft status
 scheduling:
   deleteresettoken: 0 0 0 ? * *
+  senddaily: 0/30 * * ? * *
+  sendweekly: 0 55 23 ? * SUN
+  sendmonthly: 0 50 23 1 * ?

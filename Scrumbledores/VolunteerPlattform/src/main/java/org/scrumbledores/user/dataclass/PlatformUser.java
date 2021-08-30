@@ -51,6 +51,9 @@ public class PlatformUser {
     private List<String> notifications = new ArrayList<>();
     @TextScore
     Float score;
+    private String notificationFrequency = "";
+    private List<String> notificationsToSend =  new ArrayList<>();
+    private String unsubscribeId;
 
     public PlatformUser(String username, String password, Set<String> role, String fullname, LocalDate dateOfBirth, String address, String email, String description) {
         this.username = username;

@@ -17,4 +17,6 @@ public interface PlatformUserRepository extends MongoRepository<PlatformUser, St
     List<PlatformUser> findOneByActivitiesActivityId(String activityId);
 
     List<PlatformUser> findAllBy(TextCriteria criteria, Sort sort);
+
+    Optional<PlatformUser> findByUnsubscribeId(String unsubscribeId);
 }
