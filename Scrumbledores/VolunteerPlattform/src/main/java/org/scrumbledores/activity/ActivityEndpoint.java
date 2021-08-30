@@ -102,4 +102,10 @@ public class ActivityEndpoint {
     String changeToDraft(Principal principal, @PathVariable String id) {
         return service.changeToDraft(principal, id);
     }
+
+    @PutMapping("/{id}/withdraw")
+    @Secured("ROLE_VOLUNTEER")
+    String withdrawApplication(Principal principal, @PathVariable String id) {
+        return service.withdrawApplication(principal, id);
+    }
 }

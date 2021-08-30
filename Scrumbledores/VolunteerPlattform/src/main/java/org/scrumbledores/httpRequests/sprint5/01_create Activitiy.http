@@ -1,0 +1,54 @@
+###
+// create new activit2 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "Cook Activity",
+  "description" : "we search for a cook",
+  "recommendedSkills" : "cook",
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-09-20T17:00"
+}
+
+###
+// create new activity2 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "Cooking Activity",
+  "description" : "looking for cooking",
+  "recommendedSkills" : "cooking, baking, grilling",
+  "startDate" : "2021-08-20T17:00"
+}
+
+###
+// create new activity3 as Individual
+POST http://localhost:9000/activity/
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+{
+  "title" : "Clean Activity",
+  "description" : "clean stuff",
+  "recommendedSkills" : "clean",
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-09-20T17:00"
+}
+
+###
+// create new activity4 as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "transportation",
+  "description" : "transportation",
+  "recommendedSkills" : "transport",
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-09-20T17:00"
+}
