@@ -20,4 +20,14 @@ public class NotificationEndpoint {
         return service.listAllNotifications(principal);
     }
 
+    @PutMapping("/email/register/{frequency}")
+    @Secured({"ROLE_VOLUNTEER", "ROLE_ORGANIZATION", "ROLE_INDIVIDUAL"})
+    String registerForEmailNotifications(Principal principal, @PathVariable String frequency) {
+        return service.registerForEmailNotifications(principal, frequency);
+    }
+
+    @GetMapping("/email/unsubscribe")
+    String unsubscribeEmail(@RequestParam String id) {
+        return service.unsubscribeEmail(id);
+    }
 }

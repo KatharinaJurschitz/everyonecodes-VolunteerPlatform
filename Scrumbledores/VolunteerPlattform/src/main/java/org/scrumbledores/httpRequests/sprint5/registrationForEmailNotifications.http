@@ -1,0 +1,50 @@
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "emailTester1",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "scrumbledore.email@gmail.com",
+  "skills": "cook"
+}
+
+###
+// create new activity as Organization1
+POST http://localhost:9000/activity/
+Authorization: Basic Organization1 organization
+Content-Type: application/json
+
+{
+  "title" : "EMAIL-TESTING",
+  "description" : "email testing",
+  "recommendedSkills" : "email testing",
+  "startDate" : "2021-08-16T17:00",
+  "endDate" : "2021-09-20T17:00"
+}
+
+###
+// register for Email Notification
+PUT http://localhost:9000/notifications/email/register/daily
+Authorization:  Basic emailTester1 volunteer
+
+###
+// invite volunteer
+PUT http://localhost:9000/activity/868ebf91-71f3-4385-a091-471f81b73c22/invite/emailTester1
+Authorization: Basic Organization1 organization
+
+###
+// invite volunteer
+PUT http://localhost:9000/activity/4cc5e055-f23e-45fb-91f9-9f536d06e46d/invite/emailTester1
+Authorization: Basic Organization1 organization
+
+###
+// invite volunteer
+PUT http://localhost:9000/activity/993bcc2e-311d-4fc9-894b-a274e79cdebd/invite/emailTester1
+Authorization: Basic Organization1 organization
+
