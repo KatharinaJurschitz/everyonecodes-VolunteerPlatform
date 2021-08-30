@@ -41,6 +41,7 @@ apptree:
           Accept or deny invites
           Apply for activity
           Complete activity and rate creator
+          Withdraw application
     - |       # ROLE_ORGANIZATION
         *Profile
           Edit profile

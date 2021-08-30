@@ -425,7 +425,7 @@ public class ActivityService {
             } else {
                 volunteer.getRatings().add(sortedFeedback.get(i).getRating());
                 var integer = volunteer.getRatings().stream().reduce(0, Integer::sum);
-                volunteer.setRating((double)integer / (double) volunteer.getRatings().size());
+                volunteer.setRating((double) integer / (double) volunteer.getRatings().size());
             }
             volunteerActivity.setStatus("To be rated");
             repository.save(volunteer);
@@ -485,7 +485,7 @@ public class ActivityService {
         } else {
             creator.getRatings().add(feedback.getRating());
             var integer = creator.getRatings().stream().reduce(0, Integer::sum);
-            creator.setRating((double)integer / (double) creator.getRatings().size());
+            creator.setRating((double) integer / (double) creator.getRatings().size());
         }
 
         volunteerActivity.setStatus("completed");
@@ -536,4 +536,50 @@ public class ActivityService {
 
         return "Activity " + id + " was successfully changed to Draft Status";
     }
+
+    public String withdrawApplication(Principal principal, String id) {
+        var volunteer = userService.findUser(principal);
+
+        var oVolunteerActivity = volunteer.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("pending") || x.getStatus().equals("in progress"))
+                .findFirst();
+        if (oVolunteerActivity.isEmpty()) {
+            return "Activity not found or already completed.";
+        }
+        var volunteerActivity = oVolunteerActivity.get();
+
+        volunteer.getActivities().remove(volunteerActivity);
+        repository.save(volunteer);
+
+        var creator = repository.findOneByUsername(volunteerActivity.getCreatorName()).get();
+
+        var oCreatorActivity = creator.getActivities().stream()
+                .filter(x -> x.getActivityId().equals(id))
+                .filter(x -> x.getStatus().equals("in progress"))
+                .findFirst();
+        if (oCreatorActivity.isEmpty()) {
+            return "Creator Activity not found or not 'in progress'.";
+        }
+        var creatorActivity = oCreatorActivity.get();
+
+        var oVolunteerRatingFromCreator = creatorActivity.getRatings()
+                .stream()
+                .filter(x -> x.getParticipant().getUsername().equals(volunteer.getUsername()))
+                .findFirst();
+        if (oVolunteerRatingFromCreator.isEmpty()) {
+            String message = volunteer.getUsername() + " withdrew their application to activity id " + id;
+            notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), message);
+            return "Your application for activity id " + id + " was withdrawn.";
+        }
+        var volunteerRatingInCreatorActivity = oVolunteerRatingFromCreator.get();
+
+        creatorActivity.getRatings().remove(volunteerRatingInCreatorActivity);
+        repository.save(creator);
+
+        String message = volunteer.getUsername() + " withdrew their application to activity id " + id;
+        notificationService.sendNotification(volunteer.getUsername(), creator.getUsername(), message);
+        return "Your application for activity id " + id + " was withdrawn.";
+    }
+
 }
