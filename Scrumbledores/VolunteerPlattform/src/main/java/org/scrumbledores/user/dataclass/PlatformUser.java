@@ -54,6 +54,8 @@ public class PlatformUser {
     private String notificationFrequency = "";
     private List<String> notificationsToSend =  new ArrayList<>();
     private String unsubscribeId;
+    private List<String> keywords = new ArrayList<>();
+    private int exp = 0;
 
     public PlatformUser(String username, String password, Set<String> role, String fullname, LocalDate dateOfBirth, String address, String email, String description) {
         this.username = username;

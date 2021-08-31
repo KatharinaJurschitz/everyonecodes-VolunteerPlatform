@@ -1,6 +1,7 @@
 package org.scrumbledores.activity;
 
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.scrumbledores.notification.NotificationService;
 import org.scrumbledores.user.PlatformUserRepository;
 import org.scrumbledores.user.UserService;
@@ -8,6 +9,7 @@ import org.scrumbledores.user.dataclass.*;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -29,6 +31,7 @@ public class ActivityService {
 
 //        activity.setStatus("draft"); // PRODUCTION STATUS
         activity.setStatus("in progress"); // TEST STATUS
+        activity.setTimestamp(LocalDate.now()); // TEST TIME STAMP
         activity.setCreatorName(principal.getName());
         activity.setCreatorRole(user.getRole().stream().findFirst().get());
         activity.setCreatorRating(user.getRating());
@@ -132,6 +135,7 @@ public class ActivityService {
 
         activities.remove(activity);
         activity.setStatus("in progress");
+        activity.setTimestamp(LocalDate.now());
         activities.add(activity);
 
         var user = userService.findUser(principal);
@@ -434,6 +438,7 @@ public class ActivityService {
             notificationService.sendNotification(creator.getUsername(), volunteer.getUsername(), message);
         }
         creatorActivity.setStatus("completed");
+        creator.setExp(creator.getExp()+1);
         repository.save(creator);
         return "Activity Id: " + id + " was completed.";
     }
@@ -487,7 +492,7 @@ public class ActivityService {
             var integer = creator.getRatings().stream().reduce(0, Integer::sum);
             creator.setRating((double) integer / (double) creator.getRatings().size());
         }
-
+        volunteer.setExp(volunteer.getExp()+1);
         volunteerActivity.setStatus("completed");
         volunteer.getActivities().add(volunteerActivity);
         creator.getActivities().add(creatorActivity);

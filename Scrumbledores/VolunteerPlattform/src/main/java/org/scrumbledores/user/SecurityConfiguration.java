@@ -26,6 +26,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(PUT, "/users/profile/password/reset/**").permitAll()
                 .antMatchers(GET, "/users/profile/password/confirm").permitAll()
                 .antMatchers(GET, "/notifications/email/unsubscribe**").permitAll()
+                .antMatchers(GET, "/notifications/keyword/unsubscribe**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

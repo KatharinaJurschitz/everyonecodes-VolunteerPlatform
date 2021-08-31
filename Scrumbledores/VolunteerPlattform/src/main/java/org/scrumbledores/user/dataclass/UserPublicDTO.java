@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,5 +20,6 @@ public class UserPublicDTO {
     @Min(0)
     @Max(5)
     private double rating = 0;
+    private int exp;
 
 }

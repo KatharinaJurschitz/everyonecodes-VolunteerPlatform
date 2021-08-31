@@ -42,6 +42,13 @@ apptree:
           Apply for activity
           Complete activity and rate creator
           Withdraw application
+
+        *Notifications
+          List all notifications
+          Register for email-notfications
+          Register with keyword for activity opportunities
+          List all keywords
+
     - |       # ROLE_ORGANIZATION
         *Profile
           Edit profile
@@ -63,6 +70,10 @@ apptree:
           Complete activity and rate participants
           Delete drafts and activities with no participants
           Change posted activities with no participants to draft status
+
+        *Notifications
+          List all notifications
+          Register for email-notfications
     - |       # ROLE_INDIVIDUAL
         *Profile
           Edit profile
@@ -84,6 +95,10 @@ apptree:
           Complete activity and rate participants
           Delete drafts and activities with no participants
           Change posted activities with no participants to draft status
+
+        *Notifications
+          List all notifications
+          Register for email-notfications
 scheduling:
   deleteresettoken: 0 0 0 ? * *
   senddaily: 0/30 * * ? * *

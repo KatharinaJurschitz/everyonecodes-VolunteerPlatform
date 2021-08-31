@@ -1,0 +1,50 @@
+###
+// invite volunteer1
+PUT http://localhost:9000/activity/7e46587c-b183-4435-aace-f363d21aab76/invite/Volunteer1
+Authorization: Basic Individual1 individual
+
+###
+// accept invitation
+PUT http://localhost:9000/activity/7e46587c-b183-4435-aace-f363d21aab76/accept
+Authorization: Basic Volunteer1 volunteer
+
+###
+// complete activity as creator
+PUT http://localhost:9000/activity/7e46587c-b183-4435-aace-f363d21aab76/complete
+Authorization: Basic Individual1 individual
+Content-Type: application/json
+
+[
+  {
+    "username" : "Volunteer1",
+    "rating" : 4,
+    "feedback" : "awesome!"
+  }
+]
+
+###
+// complete activity as participant
+PUT http://localhost:9000/activity/7e46587c-b183-4435-aace-f363d21aab76/close
+Authorization: Basic Volunteer1 volunteer
+Content-Type: application/json
+
+{
+  "username" : "Individual1",
+  "rating" : 3,
+  "feedback" : "quiet ok"
+}
+
+###
+// show experience Points Volunteer own
+GET http://localhost:9000/users/profile/
+Authorization: Basic Volunteer1 volunteer
+
+###
+// Show experience Points Volunteer public
+GET http://localhost:9000/users/profile/public
+Authorization: Basic Volunteer1 volunteer
+
+###
+// Show experience Points Volunteer public
+GET http://localhost:9000/users/profile/Volunteer1
+Authorization: Basic Individual1 individual

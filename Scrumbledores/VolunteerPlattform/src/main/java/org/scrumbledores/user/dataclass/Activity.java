@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Activity {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String status; // drafts, in progress, completed
+    private LocalDate timestamp;
     private List<Rating> ratings = new ArrayList<>();
 
 

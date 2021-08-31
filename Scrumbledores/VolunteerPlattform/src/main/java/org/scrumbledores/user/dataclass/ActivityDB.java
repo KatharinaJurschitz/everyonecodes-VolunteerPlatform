@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.TextScore;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,9 @@ public class ActivityDB {
     private List<Rating> ratings = new ArrayList<>();
     @TextScore
     Float score;
+    private LocalDate timestamp;
 
-    public ActivityDB(String activityId, String creatorName, String creatorRole, double creatorRating, String title, String description, String recommendedSkills, List<String> categories, LocalDateTime startDate, String status, List<Rating> ratings) {
+    public ActivityDB(String activityId, String creatorName, String creatorRole, double creatorRating, String title, String description, String recommendedSkills, List<String> categories, LocalDateTime startDate, String status, List<Rating> ratings, LocalDate timestamp) {
         this.activityId = activityId;
         this.creatorName = creatorName;
         this.creatorRole = creatorRole;
@@ -49,6 +51,21 @@ public class ActivityDB {
         this.startDate = startDate;
         this.status = status;
         this.ratings = ratings;
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity-ID: " + activityId +
+                ", CreatorName: " + creatorName +
+                ", CreatorRating: " + creatorRating +
+                ", Title: " + title +
+                ", Description: " + description +
+                ", RecommendedSkills: " + recommendedSkills +
+                ", Categories: " + categories +
+                ", StartDate: " + startDate +
+                ", EndDate: " + endDate +
+                ", Status: " + status;
     }
 }
 

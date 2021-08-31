@@ -26,6 +26,7 @@ public class PlatformDTO {
     @Min(0)
     @Max(5)
     private double rating = 0;
+    private int exp;
 
 
     public PlatformDTO(String fullname, LocalDate dateOfBirth, String address, String email, String description) {

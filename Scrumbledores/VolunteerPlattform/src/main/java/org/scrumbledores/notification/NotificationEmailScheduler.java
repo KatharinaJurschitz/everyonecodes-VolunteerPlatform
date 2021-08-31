@@ -2,6 +2,7 @@ package org.scrumbledores.notification;
 
 import lombok.AllArgsConstructor;
 import org.scrumbledores.email.EmailService;
+import org.scrumbledores.search.SearchService;
 import org.scrumbledores.user.PlatformUserRepository;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -9,8 +10,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,26 +23,30 @@ public class NotificationEmailScheduler {
 
     private final EmailService emailService;
     private final PlatformUserRepository repository;
+    private final SearchService searchService;
 
     @Async
     @Scheduled(cron = "${scheduling.senddaily}")
     public void sendDaily() {
-        send("daily");
+        sendNotification("daily");
+        sendKeyword("daily");
     }
 
     @Async
     @Scheduled(cron = "${scheduling.sendweekly}")
     public void sendWeekly() {
-        send("weekly");
+        sendNotification("weekly");
+        sendKeyword("weekly");
     }
 
     @Async
     @Scheduled(cron = "${scheduling.sendmonthly}")
     public void sendMonthly() {
-        send("monthly");
+        sendNotification("monthly");
+        sendKeyword("monthly");
     }
 
-    private void send(String frequency) {
+    private void sendNotification(String frequency) {
         repository.findAll().stream()
                 .filter(x -> x.getNotificationFrequency().equals(frequency))
                 .filter(x -> !x.getNotificationsToSend().isEmpty())
@@ -52,6 +59,34 @@ public class NotificationEmailScheduler {
                     x.getNotificationsToSend().clear();
                     x.setUnsubscribeId(uuid);
                     repository.save(x);
+                });
+    }
+
+    private void sendKeyword(String frequency) {
+        int daysToSubtract = 1;
+        if (frequency.equals("weekly")) {
+            daysToSubtract = 7;
+        }
+        if (frequency.equals("monthly")) {
+            daysToSubtract = 31;
+        }
+        final int finalDaysToSubtract = daysToSubtract;
+
+        repository.findAll().stream()
+                .filter(x -> x.getNotificationFrequency().equals(frequency))
+                .filter(x -> !x.getKeywords().isEmpty())
+                .forEach(x -> {
+                    x.getKeywords().forEach(e -> {
+                        var activitiesToSend =  searchService.findAllActivitiesByKeyword(e).stream()
+                                .filter(y -> y.getTimestamp().isAfter(LocalDate.now().minusDays(finalDaysToSubtract)))
+                                .map(Objects::toString)
+                                .collect(Collectors.joining(" <br> <br>"));
+                        emailService.sendEmail(x.getEmail(),
+                                "New activities for keyword: " + e,
+                                String.join(",<br><br>", activitiesToSend +
+                                        "<br><br><br><a href=\"http://localhost:9000/notifications/keyword/unsubscribe?username=" + x.getUsername() + "&keyword=" + e + "\">Unsubscribe from this keyword</a>"));
+         //              activitiesToSend.clear();
+                    });
                 });
     }
 }

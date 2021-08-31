@@ -52,13 +52,43 @@ public class NotificationService {
         var oUser = repository.findByUnsubscribeId(unsubscribe);
 
         if (oUser.isEmpty()) {
-            return "Hahaha :p";
+            return "You already unsubscribed.";
         }
 
         var user = oUser.get();
         user.setUnsubscribeId("");
         user.setNotificationFrequency("");
         repository.save(user);
-        return "Successfully Unsubscribed";
+        return "Successfully unsubscribed";
+    }
+
+    public String unsubscribeKeyword(String username, String keyword) {
+        var oUser = repository.findOneByUsername(username);
+
+        if (oUser.isEmpty()) {
+            return "User not found.";
+        }
+
+        var user = oUser.get();
+
+        if (!user.getKeywords().contains(keyword)) {
+            return "You already unsubscribed from this keyword.";
+        }
+
+        user.getKeywords().remove(keyword);
+        repository.save(user);
+        return "Successfully unsubscribed from keyword " + keyword;
+    }
+
+    public String registerForKeywordNotifications(Principal principal, String keyword) {
+        var user = userService.findUser(principal);
+        user.getKeywords().add(keyword);
+        repository.save(user);
+        return "You successfully registered for e-Mail Notifications for keyword " + keyword;
+    }
+
+    public List<String> listAllKeywords(Principal principal) {
+        var user = userService.findUser(principal);
+        return user.getKeywords();
     }
 }

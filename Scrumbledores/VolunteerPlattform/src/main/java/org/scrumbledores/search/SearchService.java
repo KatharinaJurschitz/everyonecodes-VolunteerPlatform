@@ -61,7 +61,8 @@ public class SearchService {
                 activity.getCategories(),
                 activity.getStartDate(),
                 activity.getStatus(),
-                activity.getRatings());
+                activity.getRatings(),
+                activity.getTimestamp());
         if (activity.getEndDate() != null) {
             activityDB.setEndDate(activity.getEndDate());
         }
@@ -81,7 +82,7 @@ public class SearchService {
                 .collect(Collectors.toList());
     }
 
-    public List<ActivityDB> findAllActivitiesFiltered(String searchCriteria, String filterDate, String filterCategory, String filterSkills, String filterCreator, String filterRating) {
+    public List<ActivityDB> findAllActivitiesByKeyword(String searchCriteria) {
         activityDBRepository.deleteAll();
         Sort sort = Sort.by("score");
         TextCriteria criteria = TextCriteria.forDefaultLanguage().caseSensitive(false).matching(searchCriteria);
@@ -91,8 +92,11 @@ public class SearchService {
                 .flatMap(List::stream)
                 .map(this::activityToActivityDB)
                 .forEach(activityDBRepository::save);
-        var result = activityDBRepository.findAllBy(criteria, sort);
-        result.forEach(System.out::println);
+        return activityDBRepository.findAllBy(criteria, sort);
+    }
+
+    public List<ActivityDB> findAllActivitiesFiltered(String searchCriteria, String filterDate, String filterCategory, String filterSkills, String filterCreator, String filterRating) {
+        var result = findAllActivitiesByKeyword(searchCriteria);
 
         var streamResult = result.stream()
                 .filter(x -> !x.getCreatorRole().equals("ROLE_VOLUNTEER"))
@@ -102,8 +106,6 @@ public class SearchService {
                 .filter(x -> x.getCreatorName().contains(filterCreator))
                 .filter(x -> x.getCreatorRating() >= Double.parseDouble(filterRating))
                 .collect(Collectors.toList());
-
-        streamResult.forEach(System.out::println);
 
         List<ActivityDB> categories = new ArrayList<>();
         if (!filterCategory.isEmpty()) {
