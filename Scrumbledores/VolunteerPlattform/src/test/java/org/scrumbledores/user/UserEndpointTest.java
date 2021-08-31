@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -23,15 +26,22 @@ class UserEndpointTest {
     @Autowired
     TestRestTemplate testRestTemplate;
 
+    @Autowired
+    MockMvc mockMvc;
+
     @MockBean
     UserService userService;
 
+
+
     String url = "/users";
+
 
     @Test
     void testThrow() {
         PlatformUser platformUser = new PlatformUser("test", "test", Set.of("test", "test2"), "test", LocalDate.now(), "test", "test", "test");
         Assertions.assertThrows(ResponseStatusException.class, () -> userEndpoint.create(platformUser));
+
     }
 
     @Test
@@ -40,6 +50,12 @@ class UserEndpointTest {
         Mockito.when(userService.createUser(platformUser)).thenReturn(Optional.of(platformUser));
         testRestTemplate.postForObject(url, platformUser, PlatformUser.class);
         Mockito.verify(userService).createUser(platformUser);
+    }
+
+    @Test
+    @WithMockUser(username = "test", roles = "ROLE_VOLUNTEER", password = "test")
+    void testAnEndpoint()throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/url"));
     }
 
 

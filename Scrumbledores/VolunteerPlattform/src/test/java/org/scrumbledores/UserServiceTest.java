@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
+import org.scrumbledores.user.dataclass.PlatformDTO;
 import org.scrumbledores.user.dataclass.PlatformUser;
 import org.scrumbledores.user.PlatformUserRepository;
 import org.scrumbledores.user.UserService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -83,7 +86,94 @@ public class UserServiceTest {
         Mockito.verify(principal).getName();
         Mockito.verify(repository).findOneByUsername("test");
     }
-    
+
+
+
+
+    @Test
+    void testShowPersonalData() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "zeplichalmike@gmail.com", "test");
+        PlatformDTO platformDTO = new PlatformDTO(user.getUsername(), user.getRole(), user.getFullname(), user.getDateOfBirth(),
+                user.getAddress(), user.getEmail(), user.getDescription(), user.getSkills(), user.getRating(), user.getExp());
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.showPersonalData(principal);
+        Assertions.assertEquals(platformDTO, result);
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+    }
+
+    @Test
+    void testEditPersonalDataEverythingStaysSame() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "test", "test");
+        PlatformDTO platformDTO = new PlatformDTO("test",Set.of("ROLE_VOLUNTEER"), "test",LocalDate.now(), "test", "test", "test", "test", 0, 1);
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.editPersonalData(platformDTO, principal);
+        Assertions.assertEquals(platformDTO, result);
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+
+    }
+
+    @Test
+    void testEditPersonalDataEmptyUsername() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "test", "test");
+        PlatformDTO platformDTO = new PlatformDTO("test",Set.of("ROLE_VOLUNTEER"), "",LocalDate.now(), "test", "test", "test", "test", 0,1);
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.editPersonalData(platformDTO, principal);
+        Assertions.assertEquals(user.getFullname(), result.getFullname());
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+
+    }
+
+    @Test
+    void testEditPersonalDataNullUsername() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "test", "test");
+        PlatformDTO platformDTO = new PlatformDTO("test",Set.of("ROLE_VOLUNTEER"), null,LocalDate.now(), "test", "test", "test", "test", 0,1);
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.editPersonalData(platformDTO, principal);
+        Assertions.assertEquals(user.getFullname(), result.getFullname());
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+
+    }
+
+    @Test
+    void testEditPersonalDataEmailNotValid() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "zeplichalmike@gmail.com", "test");
+        PlatformDTO platformDTO = new PlatformDTO("test",Set.of("ROLE_VOLUNTEER"), "",LocalDate.now(), "test", "test", "test", "test", 0,1);
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.editPersonalData(platformDTO, principal);
+        Assertions.assertEquals(user.getEmail(), result.getEmail());
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+
+    }
+
+    @Test
+    void testEditPersonalDataEmailNull() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "zeplichalmike@gmail.com", "test");
+        PlatformDTO platformDTO = new PlatformDTO("test",Set.of("ROLE_VOLUNTEER"), "",LocalDate.now(), "test", null, "test", "test", 0,1);
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.editPersonalData(platformDTO, principal);
+        Assertions.assertEquals(user.getEmail(), result.getEmail());
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+
+    }
+
+    @Test
+    void testEditPersonalDataSkillsValid() {
+        PlatformUser user = new PlatformUser("test", "test", Set.of("ROLE_VOLUNTEER"), "test", LocalDate.now(), "test", "zeplichalmike@gmail.com", "test");
+        PlatformDTO platformDTO = new PlatformDTO("test",Set.of("ROLE_VOLUNTEER"), "",LocalDate.now(), "test", null, "test", "cooking;gardening", 0,1);
+        Principal principal = () -> "test";
+        Mockito.when(repository.findOneByUsername(principal.getName())).thenReturn(Optional.of(user));
+        PlatformDTO result = service.editPersonalData(platformDTO, principal);
+        Assertions.assertEquals(platformDTO.getSkills(), result.getSkills());
+        Mockito.verify(repository).findOneByUsername(principal.getName());
+    }
+
+
 
     @ParameterizedTest
     @CsvSource({
