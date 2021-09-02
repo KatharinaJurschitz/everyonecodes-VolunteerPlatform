@@ -79,7 +79,6 @@ public class NotificationEmailScheduler {
                     user.getKeywords().forEach(keyword -> {
                         var activitiesToSend =  searchService.findAllActivitiesByKeyword(keyword).stream()
                                 .filter(activity -> activity.getStatus().equals("in progress"))
-
                                 .filter(activity -> activity.getTimestamp().isAfter(LocalDate.now().minusDays(finalDaysToSubtract)))
                                 .map(Objects::toString)
                                 .collect(Collectors.joining(" <br> <br>"));
@@ -89,7 +88,6 @@ public class NotificationEmailScheduler {
                                     String.join(",<br><br>", activitiesToSend +
                                             "<br><br><br><a href=\"http://localhost:9000/notifications/keyword/unsubscribe?username=" + user.getUsername() + "&keyword=" + keyword + "\">Unsubscribe from this keyword</a>"));
                         }
-
                     });
                 });
     }
