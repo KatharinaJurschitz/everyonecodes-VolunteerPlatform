@@ -1,0 +1,14 @@
+###
+// show web app tree
+GET http://localhost:9000/apptree
+Authorization: Basic Volunteer1 volunteer
+
+###
+// show web app tree
+GET http://localhost:9000/apptree
+Authorization: Basic Organization1 organization
+
+###
+// show web app tree
+GET http://localhost:9000/apptree
+Authorization: Basic Individual1 individual

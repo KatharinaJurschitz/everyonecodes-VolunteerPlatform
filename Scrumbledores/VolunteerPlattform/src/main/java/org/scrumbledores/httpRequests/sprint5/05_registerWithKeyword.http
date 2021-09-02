@@ -1,5 +1,10 @@
 ###
 // register for keyword cook
+PUT http://localhost:9000/notifications/keyword/register/cook
+Authorization:  Basic emailTester1 volunteer
+
+###
+// register for keyword cook
 PUT http://localhost:9000/notifications/keyword/register/clean
 Authorization:  Basic emailTester1 volunteer
 

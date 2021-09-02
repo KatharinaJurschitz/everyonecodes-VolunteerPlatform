@@ -1,0 +1,31 @@
+###
+// regular user - volunteer
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "emailTester1",
+  "password": "volunteer",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "scrumbledore.email@gmail.com",
+  "skills": "cook"
+}
+
+
+###
+// register for Email Notification
+PUT http://localhost:9000/notifications/email/register/daily
+Authorization:  Basic emailTester1 volunteer
+
+###
+// invite volunteer
+PUT http://localhost:9000/activity/db56e4e7-3319-44a2-8df1-457031939721/invite/emailTester1
+Authorization: Basic Organization1 organization
+
+###
+// invite volunteer
+PUT http://localhost:9000/activity/f6095157-c330-4c3e-8073-2012d6f3681b/invite/emailTester1
+Authorization: Basic Organization1 organization

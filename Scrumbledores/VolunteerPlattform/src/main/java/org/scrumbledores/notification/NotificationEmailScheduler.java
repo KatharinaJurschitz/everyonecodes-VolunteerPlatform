@@ -73,19 +73,23 @@ public class NotificationEmailScheduler {
         final int finalDaysToSubtract = daysToSubtract;
 
         repository.findAll().stream()
-                .filter(x -> x.getNotificationFrequency().equals(frequency))
-                .filter(x -> !x.getKeywords().isEmpty())
-                .forEach(x -> {
-                    x.getKeywords().forEach(e -> {
-                        var activitiesToSend =  searchService.findAllActivitiesByKeyword(e).stream()
-                                .filter(y -> y.getTimestamp().isAfter(LocalDate.now().minusDays(finalDaysToSubtract)))
+                .filter(user -> user.getNotificationFrequency().equals(frequency))
+                .filter(user -> !user.getKeywords().isEmpty())
+                .forEach(user -> {
+                    user.getKeywords().forEach(keyword -> {
+                        var activitiesToSend =  searchService.findAllActivitiesByKeyword(keyword).stream()
+                                .filter(activity -> activity.getStatus().equals("in progress"))
+
+                                .filter(activity -> activity.getTimestamp().isAfter(LocalDate.now().minusDays(finalDaysToSubtract)))
                                 .map(Objects::toString)
                                 .collect(Collectors.joining(" <br> <br>"));
-                        emailService.sendEmail(x.getEmail(),
-                                "New activities for keyword: " + e,
-                                String.join(",<br><br>", activitiesToSend +
-                                        "<br><br><br><a href=\"http://localhost:9000/notifications/keyword/unsubscribe?username=" + x.getUsername() + "&keyword=" + e + "\">Unsubscribe from this keyword</a>"));
-         //              activitiesToSend.clear();
+                        if (!activitiesToSend.isEmpty()) {
+                            emailService.sendEmail(user.getEmail(),
+                                    "New activities for keyword: " + keyword,
+                                    String.join(",<br><br>", activitiesToSend +
+                                            "<br><br><br><a href=\"http://localhost:9000/notifications/keyword/unsubscribe?username=" + user.getUsername() + "&keyword=" + keyword + "\">Unsubscribe from this keyword</a>"));
+                        }
+
                     });
                 });
     }

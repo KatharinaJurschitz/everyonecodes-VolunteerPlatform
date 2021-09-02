@@ -1,0 +1,26 @@
+###
+// apply for activity
+PUT http://localhost:9000/activity/e6b65197-1c41-42b5-a1d8-4df2f32644e0/apply/
+Authorization:  Basic Volunteer1 volunteer
+
+###
+// withdraw for activity
+PUT http://localhost:9000/activity/e6b65197-1c41-42b5-a1d8-4df2f32644e0/withdraw/
+Authorization:  Basic Volunteer1 volunteer
+
+
+
+###
+// apply for activity
+PUT http://localhost:9000/activity/e6b65197-1c41-42b5-a1d8-4df2f32644e0/apply/
+Authorization:  Basic Volunteer1 volunteer
+
+###
+// accept volunteer1 for activity 1
+PUT http://localhost:9000/activity/e6b65197-1c41-42b5-a1d8-4df2f32644e0/Volunteer1/accept
+Authorization:  Basic Organization1 organization
+
+###
+// withdraw for activity
+PUT http://localhost:9000/activity/e6b65197-1c41-42b5-a1d8-4df2f32644e0/withdraw/
+Authorization:  Basic Volunteer1 volunteer

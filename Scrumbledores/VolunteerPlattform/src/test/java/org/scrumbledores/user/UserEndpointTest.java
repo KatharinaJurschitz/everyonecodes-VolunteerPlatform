@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -26,16 +23,10 @@ class UserEndpointTest {
     @Autowired
     TestRestTemplate testRestTemplate;
 
-    @Autowired
-    MockMvc mockMvc;
-
     @MockBean
     UserService userService;
 
-
-
     String url = "/users";
-
 
     @Test
     void testThrow() {
@@ -52,11 +43,7 @@ class UserEndpointTest {
         Mockito.verify(userService).createUser(platformUser);
     }
 
-    @Test
-    @WithMockUser(username = "test", roles = "ROLE_VOLUNTEER", password = "test")
-    void testAnEndpoint()throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/url"));
-    }
+
 
 
 }
