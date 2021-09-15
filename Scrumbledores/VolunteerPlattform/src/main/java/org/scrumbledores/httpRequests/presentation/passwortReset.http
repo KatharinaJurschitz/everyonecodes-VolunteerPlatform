@@ -1,0 +1,30 @@
+###
+// regular user - volunteer for email
+POST http://localhost:9000/users
+Content-Type: application/json
+
+{
+  "username": "emailTester1",
+  "password": "wizard",
+  "role": ["ROLE_VOLUNTEER"],
+  "fullname": "Albus Dumbledore",
+  "dateOfBirth": "1980-10-10",
+  "address": "Hogwarts",
+  "email": "scrumbledore.email@gmail.com",
+  "skills": "cook"
+}
+
+
+###
+//reset password from wizard to magic
+PUT http://localhost:9000/users/profile/password/reset/emailTester1/magic
+
+###
+// new password not working before activated
+GET http://localhost:9000/users/login
+Authorization: Basic emailTester1 magic
+
+###
+// show email and activate + show database reset token (for 15 min), email, click link
+GET http://localhost:9000/users/login
+Authorization: Basic RumbleDumble12 magic
