@@ -14,7 +14,6 @@ Content-Type: application/json
   "skills": "cook"
 }
 
-
 ###
 //reset password from wizard to magic
 PUT http://localhost:9000/users/profile/password/reset/emailTester1/magic
@@ -25,6 +24,6 @@ GET http://localhost:9000/users/login
 Authorization: Basic emailTester1 magic
 
 ###
-// show email and activate + show database reset token (for 15 min), email, click link
+// 15 min for activation, show database, show email, click link
 GET http://localhost:9000/users/login
-Authorization: Basic RumbleDumble12 magic
+Authorization: Basic emailTester1 magic
